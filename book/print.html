@@ -1,0 +1,451 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>glean.rs - Cross-platform Telemetry library</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li><a href="index.html"><strong aria-hidden="true">1.</strong> glean.rs</a></li><li><a href="dev/index.html"><strong aria-hidden="true">2.</strong> Development</a></li><li><ol class="section"><li><a href="dev/setup-android-build-environment.html"><strong aria-hidden="true">2.1.</strong> Setup Android Build Environment</a></li><li><a href="contributing.html"><strong aria-hidden="true">2.2.</strong> Contributing</a></li></ol></li><li><a href="user/index.html"><strong aria-hidden="true">3.</strong> User</a></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">glean.rs - Cross-platform Telemetry library</h1> 
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#gleanrs" id="gleanrs"><h1>glean.rs</h1></a>
+<p><em>Modern Firefox Telemetry for mobile platforms</em></p>
+<p><code>glean</code> is a modern approach for a mobile Telemetry library.
+It started out as an <a href="https://github.com/mozilla-mobile/android-components/tree/master/components/service/glean">android-components library</a>, written purely in Kotlin to be used on Android.</p>
+<p><code>glean.rs</code> is an experiment to transform <code>glean</code> into a cross-platform library based on a low-level <a href="https://www.rust-lang.org/">Rust</a> library and the necessary platform integrations for Android and iOS.</p>
+<p><strong>Note: <code>glean.rs</code> is in development. It's not finished, not used and not documented yet.</strong></p>
+<a class="header" href="#developer-documentation" id="developer-documentation"><h1>Developer Documentation</h1></a>
+<a class="header" href="#setup-the-android-build-environment" id="setup-the-android-build-environment"><h1>Setup the Android Build Environment</h1></a>
+<hr />
+<p><strong>Note: This is currently out-of-date. We'll update it with proper instructions soon.</strong></p>
+<hr />
+<a class="header" href="#doing-a-local-build-of-the-android-components" id="doing-a-local-build-of-the-android-components"><h2>Doing a local build of the Android Components:</h2></a>
+<p>This document describes how to make local builds of the Android components in
+this repository. Most consumers of these components <em>do not</em> need to follow
+this process, but will instead use pre-built components [todo: link to this]</p>
+<p>This document, and the build process itself, is a work-in-progress - please file issues (or just update the wiki!) if you notice errors or omissions.</p>
+<a class="header" href="#prepare-your-build-environment" id="prepare-your-build-environment"><h2>Prepare your build environment</h2></a>
+<p><em>NOTE: This section is almost certainly incomplete - given it is typically
+only done once, things have probably been forgotten or over-simplified.
+Please file PRs if you notice errors or omissions here</em></p>
+<p>This process should work OK on Mac and Linux. It also works on <a href="#using-windows">Windows via WSL by following these instructions</a>.</p>
+<p>Typically, this process only needs to be run once, although periodically you
+may need to repeat some steps (eg, rust updates should be done periodically)</p>
+<p>At the end of this process you should have the following environment variables set up.</p>
+<ul>
+<li><code>ANDROID_NDK_ROOT</code></li>
+<li><code>ANDROID_NDK_TOOLCHAIN_DIR</code></li>
+<li><code>ANDROID_NDK_API_VERSION</code></li>
+<li><code>ANDROID_HOME</code></li>
+<li><code>JAVA_HOME</code></li>
+</ul>
+<p>These variables are required every time you build, so you should add them to
+a rc file or similar so they persist between reboots etc.</p>
+<ol>
+<li>
+<p>Install NDK r15c from https://developer.android.com/ndk/downloads/older_releases
+(yes, this sucks, but newer versions don't understand the <code>--deprecated-headers</code>
+argument required to build OpenSSL against a v21 toolchain).</p>
+<ul>
+<li>Extract it, put it somewhere (<code>$HOME/.android-ndk-r15c</code> is a reasonable
+choice, but it doesn't matter), and set <code>ANDROID_NDK_ROOT</code> to this location.</li>
+</ul>
+</li>
+<li>
+<p>Install <code>rustup</code> from https://rustup.rs:</p>
+<ul>
+<li>If you already have it, run <code>rustup update</code></li>
+<li>Run <code>rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android x86_64-linux-android</code></li>
+<li>Run <code>rustup toolchain add beta</code> (TODO: this no longer appears necessary).</li>
+</ul>
+</li>
+<li>
+<p>Ensure your clone of <code>mozilla/application-services</code> is up to date.</p>
+</li>
+<li>
+<p>Setup your NDK toolchains.</p>
+<ul>
+<li>Create a directory where we'll install the standalone toolchains.
+<ul>
+<li><code>mkdir -p ~/.ndk-standalone-toolchains</code></li>
+<li><code>export ANDROID_NDK_TOOLCHAIN_DIR=$HOME/.ndk-standalone-toolchains</code></li>
+</ul>
+</li>
+<li><code>cd path/to/application-services/libs</code></li>
+<li><code>./setup_toolchains_local.sh $ANDROID_NDK_ROOT</code>
+<ul>
+<li>Say yes if/when prompted.</li>
+<li>When this is done, it should have set <code>$ANDROID_NDK_API_VERSION</code> (to 21),
+but you should add this to an rcfile as above.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Install or locate Java</p>
+<ul>
+<li>Either install Java, or, if Android Studio is installed, you can probably find one
+installed in a <code>jre</code> directory under the Android Studio directory.</li>
+<li>Set <code>JAVA_HOME</code> to this location and add it to your rc file.</li>
+</ul>
+</li>
+<li>
+<p>Install or locate the Android SDKs</p>
+<ul>
+<li>Install the Android SDKs. If Android Studio is involved, it may have already installed
+them somewhere - use the &quot;SDK Manager&quot; to identify this location.</li>
+<li>Set <code>ANDROID_HOME</code> to this location and add it to your rc file.</li>
+</ul>
+</li>
+<li>
+<p>Build openssl and sqlcipher</p>
+<ul>
+<li><code>cd path/to/application-services/libs</code> (Same dir you were just in for step 4)</li>
+<li><code>./build-all.sh android</code> (Go make some coffee or something, this will take
+some time as it has to compile sqlcipher and openssl for x86, x86_64, arm, and arm64).</li>
+<li>Note that if something goes wrong here
+<ul>
+<li>Check all environment variables mentions above are set and correct.</li>
+<li>The following directories should exist, and point to standalone NDK
+toolchains <code>$ANDROID_NDK_TOOLCHAIN_DIR/{x86,x86_64,arm,arm64}-$ANDROID_NDK_API_VERSION</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<a class="header" href="#building" id="building"><h2>Building</h2></a>
+<p>Having done the above, the build process is the easy part! Again, ensure all
+environment variables mentioned above are in place.</p>
+<ol>
+<li>
+<p>Ensure your clone of application-services is up-to-date.</p>
+</li>
+<li>
+<p>Ensure rust is up-to-date by running <code>rustup</code></p>
+</li>
+<li>
+<p>The builds are all performed by <code>./gradlew</code> and the general syntax used is
+<code>./gradlew project:task</code></p>
+<p>You can see a list of projects by executing <code>./gradlew projects</code> and a list
+of tasks by executing <code>./gradlew tasks</code>.</p>
+</li>
+</ol>
+<a class="header" href="#publishing-the-components-to-your-local-maven-repository" id="publishing-the-components-to-your-local-maven-repository"><h3>Publishing the components to your local maven repository.</h3></a>
+<p>The easiest way to use the build is to have your Android project reference the component from your local maven repository - this is done by the <code>publishToMavenLocal</code> task - so:</p>
+<pre><code>./gradlew publishToMavenLocal
+</code></pre>
+<p>should work. Check your <code>~/.m2</code> directory (which is your local maven repo) for the components.</p>
+<p>You can also publish single projects - eg:</p>
+<pre><code>./gradlew service-sync-places:publishToMavenLocal
+</code></pre>
+<p>For more information about using the local maven repo, see this <a href="https://mozilla-mobile.github.io/android-components/contributing/testing-components-inside-app">android components guide</a></p>
+<a class="header" href="#other-build-types" id="other-build-types"><h3>Other build types</h3></a>
+<p>If you just want the build artifacts, you probably want one of the <code>assemble</code> tasks - either
+<code>assembleDebug</code> or <code>assembleRelease</code>.</p>
+<p>For example, to build a debug version of the places library, the command you
+want is <code>./gradlew places-library:assembleDebug</code></p>
+<p>After building, you should find the built artifact under the <code>target</code> directory,
+with sub-directories for each Android architecture. For example, after executing:</p>
+<pre><code>% ./gradlew places-library:assembleDebug
+</code></pre>
+<p>you will find:</p>
+<pre><code>target/aarch64-linux-android/release/libplaces_ffi.so
+target/x86_64-linux-android/release/libplaces_ffi.so
+target/i686-linux-android/release/libplaces_ffi.so
+target/armv7-linux-androideabi/release/libplaces_ffi.so
+</code></pre>
+<p>(You will probably notice that even though as used <code>assembleDebug</code>, the directory names are <code>release</code> - this may change in the future)</p>
+<p>You should also find the .kt files for the project somewhere there and in the right directory structure if that turns out to be useful.</p>
+<a class="header" href="#using-windows" id="using-windows"><h1>Using Windows</h1></a>
+<p>It's currently tricky to get some of these builds working on Windows, primarily due to our use of <code>sqlcipher</code> and <code>openssl</code>. However, by using the Windows Subsystem for Linux, it is possible to get builds working, but still have them published to your &quot;native&quot; local maven cache so it's available for use by a &quot;native&quot; Android Studio.</p>
+<p>As above, this document may be incomplete, so please edit or open PRs where necessary.</p>
+<p>In general, you will follow the exact same process outlined above, with one or 2 unique twists.</p>
+<a class="header" href="#setting-up-the-build-environment" id="setting-up-the-build-environment"><h2>Setting up the build environment</h2></a>
+<p>You need to install most of the build tools in WSL. This means you end up with many tools installed twice - once in WSL and once in &quot;native&quot; Windows - but the only cost of that is disk-space.</p>
+<p>You will need the following tools in WSL:</p>
+<ul>
+<li>
+<p>unzip - <code>sudo apt install unzip</code></p>
+</li>
+<li>
+<p>python - <code>sudo apt install python</code></p>
+</li>
+<li>
+<p>java - you may already have it? try <code>java -version</code>. Java ended up causing me grief (stuck at 100% CPU doing nothing), but google pointed at one popular way of installing java:</p>
+<pre><code>sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java8-installer
+sudo apt install oracle-java8-set-default
+</code></pre>
+</li>
+<li>
+<p>tcl, used for sqlcipher builds - <code>sudo apt install tcl-dev</code></p>
+</li>
+<li>
+<p>Android SDKs - this process is much the same as for normal Linux - roughly</p>
+<ul>
+<li>
+<p>visit https://developer.android.com/studio/, at the bottom of the page locate the current SDKs for linux
+at time of writing, this is https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip</p>
+<pre><code>cd ~
+mkdir android-sdk
+cd android-sdk
+unzip {path-to.zip}
+export ANDROID_HOME=$HOME/android-sdk
+$ANDROID_HOME/tools/bin/sdkmanager &quot;platforms;android-26&quot;
+$ANDROID_HOME/tools/bin/sdkmanager --licenses
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<p>(Note - it may be necessary to execute <code>$ANDROID_HOME/tools/bin/sdkmanager &quot;build-tools;26.0.2&quot; &quot;platform-tools&quot; &quot;platforms;android-26&quot; &quot;tools&quot;</code>, but may not! See also <a href="https://gist.github.com/fdmnio/fd42caec2e5a7e93e12943376373b7d0">this gist</a> which google found for me and might have useful info.</p>
+<ul>
+<li>Follow all the other steps above - eg, you still need the NDK setup in WSL and all environment variables above set.</li>
+</ul>
+<a class="header" href="#configure-maven" id="configure-maven"><h2>Configure Maven</h2></a>
+<p>We now want to configure maven to use the native windows maven repository - then, when doing <code>./gradlew install</code> from WSL, it ends up in the Windows maven repo.</p>
+<ul>
+<li>
+<p>Execute <code>sudo apt install maven</code> - this should have created a <code>~/.m2</code> folder as the WSL maven repository. In this directory, create a file <code>~/.m2/settings.xml</code> with the content:</p>
+<pre><code>&lt;settings&gt;
+  &lt;localRepository&gt;/mnt/c/Users/{username}/.m2/repository&lt;/localRepository&gt;
+&lt;/settings&gt;
+</code></pre>
+<p>(obviously with {username} adjusted appropriately)</p>
+</li>
+<li>
+<p>Now you should be ready to roll - <code>./gradlew install</code> should complete and publish the components to your native maven repo!</p>
+</li>
+</ul>
+<p>\o/</p>
+<a class="header" href="#contributing-to-gleanrs" id="contributing-to-gleanrs"><h1>Contributing to glean.rs</h1></a>
+<p>Anyone is welcome to help with the Application Services project. Feel free to get in touch with other community members on IRC
+or through issues here on GitHub.</p>
+<ul>
+<li>IRC: <code>#telemetry</code> on <code>irc.mozilla.org</code></li>
+<li>and of course, <a href="https://github.com/badboy/glean.rs/issues">the issues list</a></li>
+</ul>
+<p>Participation in this project is governed by the
+<a href="https://www.mozilla.org/en-US/about/governance/policies/participation/">Mozilla Community Participation Guidelines</a>.</p>
+<a class="header" href="#bug-reports" id="bug-reports"><h2>Bug Reports</h2></a>
+<p>You can file issues here on GitHub. Please try to include as much information as you can and under what conditions
+you saw the issue.</p>
+<a class="header" href="#making-code-changes" id="making-code-changes"><h2>Making Code Changes</h2></a>
+<p>To work on the code in this repo you will need to be familiar with
+the <a href="https://www.rust-lang.org/">Rust</a> programming language.
+You can get a working rust compiler and toolchain via <a href="https://rustup.rs/">rustup</a>.</p>
+<p>You can check that everything compiles by running the following from the
+root of your checkout:</p>
+<pre><code>cargo test --all
+</code></pre>
+<p>If you plan to work on the Android component bindings, you should also review
+the instructions for <a href="https://github.com/badboy/glean.rs/blob/master/docs/dev/setup-android-build-environment.md">setting up an Android build environment</a></p>
+<a class="header" href="#sending-pull-requests" id="sending-pull-requests"><h2>Sending Pull Requests</h2></a>
+<p>Patches should be submitted as <a href="https://help.github.com/articles/about-pull-requests/">pull requests</a> (PRs).</p>
+<p>Before submitting a PR:</p>
+<ul>
+<li>Your code must run and pass all the automated tests before you submit your PR for review. &quot;Work in progress&quot; pull requests are allowed to be submitted, but should be clearly labeled as such and should not be merged until all tests pass and the code has been reviewed.
+<ul>
+<li>Run <code>cargo test --all</code> to make sure all tests still pass and no warnings are emitted.</li>
+<li>Run <code>cargo fmt</code> to ensure the code is formatted correctly.</li>
+</ul>
+</li>
+<li>Your patch should include new tests that cover your changes. It is your and your reviewer's responsibility to ensure your patch includes adequate tests.</li>
+</ul>
+<p>When submitting a PR:</p>
+<ul>
+<li>You agree to license your code under the project's open source license (<a href="/LICENSE">MPL 2.0</a>).</li>
+<li>Base your branch off the current <code>master</code> (see below for an example workflow).</li>
+<li>Add both your code and new tests if relevant.</li>
+<li>Run <code>cargo test</code> to make sure your code passes linting and tests.</li>
+<li>Please do not include merge commits in pull requests; include only commits with the new relevant code.</li>
+</ul>
+<a class="header" href="#code-review" id="code-review"><h2>Code Review</h2></a>
+<p>This project is production Mozilla code and subject to our <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Developer_guide/Committing_Rules_and_Responsibilities">engineering practices and quality standards</a>. Every patch must be peer reviewed by a member of the Application Services team.</p>
+<a class="header" href="#user-documentation" id="user-documentation"><h1>User Documentation</h1></a>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+        
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+        
+        
+
+    </body>
+</html>
