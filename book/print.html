@@ -75,7 +75,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="index.html"><strong aria-hidden="true">1.</strong> glean.rs</a></li><li><a href="dev/index.html"><strong aria-hidden="true">2.</strong> Development</a></li><li><ol class="section"><li><a href="dev/android/index.html"><strong aria-hidden="true">2.1.</strong> Android</a></li><li><ol class="section"><li><a href="dev/android/setup-android-build-environment.html"><strong aria-hidden="true">2.1.1.</strong> Setup Build Environment</a></li></ol></li><li><a href="contributing.html"><strong aria-hidden="true">2.2.</strong> Contributing</a></li></ol></li><li><a href="user/index.html"><strong aria-hidden="true">3.</strong> User</a></li><li><ol class="section"><li><a href="user/metrics/index.html"><strong aria-hidden="true">3.1.</strong> Metrics</a></li><li><ol class="section"><li><a href="user/metrics/boolean.html"><strong aria-hidden="true">3.1.1.</strong> Boolean</a></li><li><a href="user/metrics/counter.html"><strong aria-hidden="true">3.1.2.</strong> Counter</a></li><li><a href="user/metrics/string.html"><strong aria-hidden="true">3.1.3.</strong> String</a></li><li><a href="user/metrics/string_list.html"><strong aria-hidden="true">3.1.4.</strong> String List</a></li><li><a href="user/metrics/timespan.html"><strong aria-hidden="true">3.1.5.</strong> Timespan</a></li><li><a href="user/metrics/timing_distribution.html"><strong aria-hidden="true">3.1.6.</strong> Timing Distribution</a></li><li><a href="user/metrics/uuid.html"><strong aria-hidden="true">3.1.7.</strong> UUID</a></li><li><a href="user/metrics/datetime.html"><strong aria-hidden="true">3.1.8.</strong> Datetime</a></li><li><a href="user/metrics/event.html"><strong aria-hidden="true">3.1.9.</strong> Event</a></li><li><a href="user/metrics/labeled_metric.html"><strong aria-hidden="true">3.1.10.</strong> Labeled Metrics</a></li></ol></li></ol></li></ol>
+            <ol class="chapter"><li><a href="index.html"><strong aria-hidden="true">1.</strong> glean.rs</a></li><li><a href="dev/index.html"><strong aria-hidden="true">2.</strong> Development</a></li><li><ol class="section"><li><a href="dev/android/index.html"><strong aria-hidden="true">2.1.</strong> Android</a></li><li><ol class="section"><li><a href="dev/android/setup-android-build-environment.html"><strong aria-hidden="true">2.1.1.</strong> Setup Build Environment</a></li></ol></li><li><a href="dev/core/index.html"><strong aria-hidden="true">2.2.</strong> Rust Component</a></li><li><ol class="section"><li><a href="dev/core/dependency-management.html"><strong aria-hidden="true">2.2.1.</strong> Dependency Management</a></li></ol></li><li><a href="dev/ffi/index.html"><strong aria-hidden="true">2.3.</strong> FFI Layer</a></li><li><ol class="section"><li><a href="dev/ffi/when-to-use-what-in-the-ffi.html"><strong aria-hidden="true">2.3.1.</strong> When/How FFI</a></li></ol></li><li><a href="contributing.html"><strong aria-hidden="true">2.4.</strong> Contributing</a></li></ol></li><li><a href="user/index.html"><strong aria-hidden="true">3.</strong> User</a></li><li><ol class="section"><li><a href="user/adding-new-metrics.html"><strong aria-hidden="true">3.1.</strong> Adding new metrics</a></li><li><a href="user/testing-metrics.html"><strong aria-hidden="true">3.2.</strong> Testing metrics</a></li><li><a href="user/metrics/index.html"><strong aria-hidden="true">3.3.</strong> Metrics types</a></li><li><ol class="section"><li><a href="user/metrics/boolean.html"><strong aria-hidden="true">3.3.1.</strong> Boolean</a></li><li><a href="user/metrics/counter.html"><strong aria-hidden="true">3.3.2.</strong> Counter</a></li><li><a href="user/metrics/string.html"><strong aria-hidden="true">3.3.3.</strong> String</a></li><li><a href="user/metrics/string_list.html"><strong aria-hidden="true">3.3.4.</strong> String List</a></li><li><a href="user/metrics/timespan.html"><strong aria-hidden="true">3.3.5.</strong> Timespan</a></li><li><a href="user/metrics/timing_distribution.html"><strong aria-hidden="true">3.3.6.</strong> Timing Distribution</a></li><li><a href="user/metrics/uuid.html"><strong aria-hidden="true">3.3.7.</strong> UUID</a></li><li><a href="user/metrics/datetime.html"><strong aria-hidden="true">3.3.8.</strong> Datetime</a></li><li><a href="user/metrics/event.html"><strong aria-hidden="true">3.3.9.</strong> Event</a></li><li><a href="user/metrics/labeled_metric.html"><strong aria-hidden="true">3.3.10.</strong> Labeled Metrics</a></li></ol></li><li><a href="user/pings/index.html"><strong aria-hidden="true">3.4.</strong> Pings</a></li><li><ol class="section"><li><a href="user/pings/baseline.html"><strong aria-hidden="true">3.4.1.</strong> Baseline Ping</a></li></ol></li></ol></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -352,6 +352,214 @@ $ANDROID_HOME/tools/bin/sdkmanager --licenses
 </li>
 </ul>
 <p>\o/</p>
+<a class="header" href="#glean-core---rust-component" id="glean-core---rust-component"><h1>glean-core - Rust component</h1></a>
+<p>The majority of Glean is implemented as a Rust component, to be usable across all platforms.</p>
+<p>This includes:</p>
+<ul>
+<li>Implementations of all metric types</li>
+<li>A storage layer</li>
+<li>A ping serializer</li>
+</ul>
+<a class="header" href="#dependency-management-guidelines" id="dependency-management-guidelines"><h1>Dependency Management Guidelines</h1></a>
+<hr />
+<p>This is currently copied from <a href="https://github.com/mozilla/application-services/blob/4347ea9c590d2319db1c994680832cc20bc3758d/docs/dependency-management.md">application-services documentation</a>.</p>
+<hr />
+<p>This repo uses third-party code from a variety of sources, so we need to be mindful
+of how these dependencies will affect our consumers.  Considerations include:</p>
+<ul>
+<li>General code quality.</li>
+<li><a href="https://www.mozilla.org/en-US/MPL/license-policy/#Licenses_Compatible_with_the_MPL">Licensing compatibility</a>.</li>
+<li>Handling of security vulnerabilities.</li>
+<li>The potential for <a href="https://medium.com/intrinsic/compromised-npm-package-event-stream-d47d08605502">supply-chain compromise</a>.</li>
+</ul>
+<p>We're still evolving our policies in this area, but these are the
+guidelines we've developed so far.</p>
+<a class="header" href="#rust-code" id="rust-code"><h2>Rust Code</h2></a>
+<p>Unlike <a href="https://firefox-source-docs.mozilla.org/build/buildsystem/rust.html">Firefox</a>,
+we do not vendor third-party source code directly into the repo.  Instead we rely on
+<code>Cargo.lock</code> and its hash validation to ensure that each build uses an identical copy
+of all third-party crates.  These are the measures we use for ongoing maintence of our
+existing dependencies:</p>
+<ul>
+<li>Check <code>Cargo.lock</code> into the repository.</li>
+<li>Generate built artifacts using the <code>--locked</code> flag to <code>cargo build</code>, as an additional
+assurance that the existing <code>Cargo.lock</code> will be respected.
+<ul>
+<li>TODO: how to actually make this happen via rust-android-gradle plugin?</li>
+</ul>
+</li>
+<li>Regularly run <a href="https://github.com/RustSec/cargo-audit">cargo-audit</a> in CI to alert us to
+security problems in our dependencies.
+<ul>
+<li>It runs on every PR, and once per hour as a scheduled job with failures reported to slack.</li>
+</ul>
+</li>
+<li>Use <a href="https://github.com/onur/cargo-license">cargo-license</a> for a basic licence-compatibility
+check as part of CI, to guard against human error.</li>
+</ul>
+<p>Adding a new dependency, whether we like it or not, is a big deal - that dependency and everything
+it brings with it will become part of Firefox-branded products that we ship to end users.
+We try to balance this responsibility against the many benefits of using existing code, as follows:</p>
+<ul>
+<li>In general, be conservative in adding new third-party dependencies.
+<ul>
+<li>For trivial functionality, consider just writing it yourself.
+Remember the cautionary tale of <a href="https://www.theregister.co.uk/2016/03/23/npm_left_pad_chaos/">left-pad</a>.</li>
+<li>Check if we already have a crate in our dependency tree that can provide the needed functionality.</li>
+</ul>
+</li>
+<li>Prefer crates that have a a high level of due-dilligence already applied, such as:
+<ul>
+<li>Crates that are <a href="https://dxr.mozilla.org/mozilla-central/source/third_party/rust">already vendored into Firefox</a>.</li>
+<li>Crates from <a href="https://github.com/rust-lang-nursery">rust-lang-nursery</a>.</li>
+<li>Crates that appear to be widely used in the Rust community.</li>
+</ul>
+</li>
+<li>Check that it is clearly licensed and is <a href="https://www.mozilla.org/en-US/MPL/license-policy/#Licenses_Compatible_with_the_MPL">MPL-2.0 compatible</a>.</li>
+<li>Take the time to investigate the crate's source and ensure it is suitably high-quality.
+<ul>
+<li>Be especially wary of uses of <code>unsafe</code>, or of code that is unusually resource-intensive to build.</li>
+<li>Dev dependencies do not require as much scrutiny as dependencies that will ship in consuming applications,
+but should still be given some thought.
+<ul>
+<li>There is still the potential for supply-chain compromise with dev dependencies!</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Explicitly describe your consideration of these points in the PR that introduces the new dependency.</li>
+</ul>
+<p>Updating to new versions of existing dependencies is a normal part of software development
+and is not accompanied by any partiulcar ceremony.</p>
+<a class="header" href="#when-to-use-what-method-of-passing-data-between-rust-and-javaswift" id="when-to-use-what-method-of-passing-data-between-rust-and-javaswift"><h1>When to use what method of passing data between Rust and Java/Swift</h1></a>
+<hr />
+<p>This is currently copied from <a href="https://github.com/mozilla/application-services/blob/4347ea9c590d2319db1c994680832cc20bc3758d/docs/howtos/when-to-use-what-in-the-ffi.md">application-services documentation</a>.</p>
+<hr />
+<p>There are a bunch of options here. For the purposes of our discussion,
+there are two kinds of values you may want to pass over the FFI.</p>
+<ol>
+<li>Types with identity (includes stateful types, resource types, or anything that
+isn't really serializable).</li>
+<li>Plain ol' data.</li>
+</ol>
+<a class="header" href="#types-with-identity" id="types-with-identity"><h2>Types with identity</h2></a>
+<p>Examples of this are things like database connections, the FirefoxAccounts
+struct, etc. These types are complex, implemented in rust, and it's not
+unreasonable for them to come to Java/Kotlin as a type representing a
+resource (e.g. implementing <code>Closable</code>/<code>AutoClosable</code>).</p>
+<p>You have two choices here:</p>
+<ol>
+<li>
+<p>Use a <code>ConcurrentHandleMap</code> to store all instances of your object, and
+pass the handle back and forth as a u64 from Rust / Long from Kotlin.</p>
+<p>This is recommended for most cases, as it's the hardest to mess up.
+Additionally, for types T such that <code>&amp;T: Sync + Send</code>, or that you
+need to call <code>&amp;mut self</code> method, this is the safest choice.</p>
+<p>Additionally, this will ensure panic-safety, as you'll poison your Mutex.</p>
+<p>The <a href="https://docs.rs/ffi-support/*/ffi_support/handle_map/index.html"><code>ffi_support::handle_map</code> docs</a>
+are good, and under <code>ConcurrentHandleMap</code> include an example of how to set
+this up. You can also look at most of the FFI crates, as they do this (with
+the exception of <code>rc_log</code>, which has unique requirements).</p>
+</li>
+<li>
+<p>Using an opaque pointer. This is generally only recommended for rare cases
+like the <code>PlacesInterruptHandle</code> (or the <code>LogAdapterState</code> from <code>rc_log</code>,
+although it will probably eventually use a handle).</p>
+<p>It's good if your synchronization or threading requirements are somewhat
+complex and handled separately, such that the additional overhead of
+the <code>ConcurrentHandleMap</code> is undesirable. You should probably talk to us
+before adding another type that works this way, to make sure it's sound.</p>
+<p>The <a href="https://docs.rs/ffi-support/*/ffi_support/macro.implement_into_ffi_by_pointer.html"><code>ffi_support</code> docs</a>
+discuss how to do this, or take a look at how it's done for
+<code>PlacesInterruptHandle</code>).</p>
+</li>
+</ol>
+<a class="header" href="#plain-old-data" id="plain-old-data"><h2>Plain Old Data</h2></a>
+<p>This includes both primitive values, strings, arrays, or arbitrarially nested
+structures containing them.</p>
+<a class="header" href="#primitives" id="primitives"><h3>Primitives</h3></a>
+<p>Specifically numeric primitives. These we'll tackle first since they're the
+easiest.</p>
+<p>In general, you can just pass them as you wish. There are a couple of
+exceptions/caveats. All of them are caused by JNA/Android issues (Swift has very
+good support for calling over the FFI), but it's our lowest common denominator.</p>
+<ol>
+<li>
+<p><code>bool</code>: Don't use it. JNA doesn't handle it well. Instead, use a numeric type
+(like <code>u8</code>) and represent 0 for false and 1 for true for interchange over the
+FFI, converting back to a Kotlin <code>Boolean</code> or swift <code>Bool</code> after (as to
+not expose this somewhat annoying limitation in our public API).</p>
+</li>
+<li>
+<p><code>usize</code>/<code>isize</code>: These cause the structure size to be different based on the
+platform. JNA does handle this if you use <code>NativeSize</code>, but it's awkward,
+incompatible with it's Direct Mapping optimization (which we don't use but
+want to in the future), and has more overhead than just using <code>i64</code>/<code>i32</code> for
+<code>Long</code>/<code>Int</code>. (You can also use <code>u64</code>/<code>u32</code> for <code>Long</code>/<code>Int</code>, if you're certain the
+value is not negative)</p>
+</li>
+<li>
+<p><code>char</code>: I really don't see a reason you need to pass a single codepoint over the
+FFI, but if someone needs to do this, they instead should just pass it as a <code>u32</code>.</p>
+<p>If you do this, you should probably be aware of the fact that Java chars are 16
+bit, and Swift <code>Character</code>s are actually strings (they represent Extended
+Grapheme Clusters, not codepoints).</p>
+</li>
+</ol>
+<a class="header" href="#strings" id="strings"><h3>Strings</h3></a>
+<p>These we pass as nul-terminated UTF-8 C-strings.</p>
+<p>For return values, used <code>*mut c_char</code>, and for input, use
+<a href="https://docs.rs/ffi-support/*/ffi_support/struct.FfiStr.html"><code>ffi_support::FfiStr</code></a></p>
+<ol>
+<li>
+<p>If the string is returned from Rust to Kotlin/Swift, you need to expose a
+string destructor from your ffi crate. See
+<a href="https://docs.rs/ffi-support/*/ffi_support/macro.define_string_destructor.html"><code>ffi_support::define_string_destructor!</code></a>).</p>
+<p>For converting to a <code>*mut c_char</code>, use either
+<a href="https://docs.rs/ffi-support/*/ffi_support/fn.rust_string_to_c.html"><code>rust_string_to_c</code></a>
+if you have a <code>String</code>, or
+<a href="https://docs.rs/ffi-support/*/ffi_support/fn.opt_rust_string_to_c.html"><code>opt_rust_string_to_c</code></a>
+for <code>Option&lt;String&gt;</code> (None becomes <code>std::ptr::null_mut()</code>).</p>
+<p><strong>Important</strong>: In Kotlin, the type returned by a function that produces this
+must be <code>Pointer</code>, and not <code>String</code>, and the parameter that the destructor takes
+as input must also be <code>Pointer</code>.</p>
+<p>Using <code>String</code> will <em>almost</em> work. JNA will convert the return value to
+<code>String</code> automatically, leaking the value rust provides. Then, when passing
+to the destructor, it will allocate a temporary buffer, pass it to Rust, which
+we'll free, corrupting both heaps 💥. Oops!</p>
+</li>
+<li>
+<p>If the string is passed into Rust from Kotlin/Swift, the rust code should
+declare the parameter as a <a href="https://docs.rs/ffi-support/*/ffi_support/struct.FfiStr.html"><code>FfiStr&lt;'_&gt;</code></a>.
+and things should then work more or less automatically. The <code>FfiStr</code> has methods
+for extracting it's data as <code>&amp;str</code>, <code>Option&lt;&amp;str&gt;</code>, <code>String</code>, and <code>Option&lt;String&gt;</code>.</p>
+</li>
+</ol>
+<p>It's also completely fine to use Protobufs or JSON for this case!</p>
+<a class="header" href="#aggregates" id="aggregates"><h3>Aggregates</h3></a>
+<p>This is any type that's more complex than a primitive or a string (arrays,
+structures, and combinations there-in). There are two options we recommend for
+these cases:</p>
+<ol>
+<li>
+<p>Passing data using protobufs. See the
+&quot;<a href="dev/ffi/passing-protobuf-data-over-ffi.html">Using protobuf-encoded data over Rust FFI</a>&quot;
+document for details on how to do this. We recommend this for all new use cases, unless
+you have a specific reason that JSON is better (e.g. semi-opaque JSON encoded data is
+desired on the other side).</p>
+</li>
+<li>
+<p>Passing data as JSON. This is very easy, and useful for prototyping, however
+much slower, requires a great deal of copying and redundant encode/decode
+steps (in general, the data will be copied at least 4 times to make this
+work, and almost certainly more in practice), and can be done relatively
+easily by <code>derive(Serialize, Deserialize)</code>, and adding
+<a href="https://docs.rs/ffi-support/*/ffi_support/macro.implement_into_ffi_by_json.html"><code>ffi_support::implement_into_ffi_by_json</code></a>
+into the crate that defines the type.</p>
+<p>Again, for new code, this is not a recommended approach for new code, unless
+there's some reason it's preferrable for you.</p>
+</li>
+</ol>
 <a class="header" href="#contributing-to-gleanrs" id="contributing-to-gleanrs"><h1>Contributing to glean.rs</h1></a>
 <p>Anyone is welcome to help with the Application Services project. Feel free to get in touch with other community members on IRC
 or through issues here on GitHub.</p>
@@ -397,6 +605,129 @@ the instructions for <a href="https://github.com/badboy/glean.rs/blob/master/doc
 <a class="header" href="#code-review" id="code-review"><h2>Code Review</h2></a>
 <p>This project is production Mozilla code and subject to our <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Developer_guide/Committing_Rules_and_Responsibilities">engineering practices and quality standards</a>. Every patch must be peer reviewed by a member of the Application Services team.</p>
 <a class="header" href="#user-documentation" id="user-documentation"><h1>User Documentation</h1></a>
+<a class="header" href="#adding-new-metrics" id="adding-new-metrics"><h1>Adding new metrics</h1></a>
+<p>All metrics that your project collects must be defined in a <code>metrics.yaml</code> file.
+This file should be at the root of the application or library module (the same directory as the <code>build.gradle</code> file you updated).
+The format of that file is documented <a href="https://mozilla.github.io/glean_parser/metrics-yaml.html">here</a>.</p>
+<p>When adding a new metric, the workflow is:</p>
+<ul>
+<li>Decide on which <a href="user/metrics/index.html">metric type</a> you want to use.</li>
+<li>Add a new entry to <a href="#The-metricsyaml-file"><code>metrics.yaml</code></a>.</li>
+<li>Add code to your project to record into the metric by calling Glean.</li>
+</ul>
+<p><strong>Important</strong>: Any new data collection requires documentation and data-review.
+This is also required for any new metric automatically collected by Glean.</p>
+<a class="header" href="#the-metricsyaml-file" id="the-metricsyaml-file"><h2>The <code>metrics.yaml</code> file</h2></a>
+<p>The <code>metrics.yaml</code> file defines the metrics your application or library will
+send. They are organized into categories.</p>
+<p>Therefore, the overall organization is:</p>
+<pre><code class="language-YAML"># Required to indicate this is a `metrics.yaml` file
+$schema: moz://mozilla.org/schemas/glean/metrics/1-0-0
+
+toolbar:
+  click:
+    type: event
+    description: |
+      Event to record toolbar clicks.
+    notification_emails:
+      - CHANGE-ME@test-only.com
+    bugs:
+      - 123456789
+    data_reviews:
+      - http://test-only.com/path/to/data-review
+    expires:
+      - 2019-06-01  # &lt;-- Update to a date in the future
+    
+  metric2:
+    ...
+    
+category2.subcategory:  # Categories can contain subcategories
+  metric3:
+    ...
+
+</code></pre>
+<p>The details of the metric parameters are described below in <a href="#Common-metric-parameters">Common metric parameters</a>.</p>
+<p>The <code>metrics.yaml</code> file is used to generate <code>Kotlin</code> code that becomes the
+public API to access your application's metrics.</p>
+<a class="header" href="#metric-naming" id="metric-naming"><h2>Metric naming</h2></a>
+<p>Category and metric names in the <code>metrics.yaml</code> are in <code>snake_case</code>, but given
+the Kotlin coding standards defined by
+<a href="https://github.com/pinterest/ktlint">ktlint</a>, these identifiers must be
+<code>camelCase</code> in Kotlin. For example, the metric defined in the <code>metrics.yaml</code> as:</p>
+<pre><code class="language-YAML">views:
+  login_opened:
+    ...
+</code></pre>
+<p>is accessible in Kotlin as:</p>
+<pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Views
+Views.loginOpened...
+</code></pre>
+<a class="header" href="#unit-testing-glean-metrics" id="unit-testing-glean-metrics"><h1>Unit testing Glean metrics</h1></a>
+<hr />
+<p><em>Note:</em> Testing of user-defined metrics is not yet implemented for Glean.rs.</p>
+<hr />
+<p>In order to support unit testing inside of client applications using Glean, a set of testing API
+functions have been included.  The intent is to make Glean easier to test 'out of the box' in any
+client application it may be used in.  These functions expose a way to inspect and validate recorded
+metric values within the client application but are restricted to test code only through visibility
+annotations (<code>@VisibleForTesting(otherwise = VisibleForTesting.NONE)</code>).</p>
+<a class="header" href="#general-test-api-method-semantics" id="general-test-api-method-semantics"><h2>General test API method semantics</h2></a>
+<p>In order to prevent issues with async calls when unit testing Glean, it is important to put Glean
+into testing mode by calling <code>Glean.enableTestingMode()</code>.  This will ensure that metrics are done
+recording when the other test functions are used.</p>
+<p>To check if a value exists (i.e. it has been recorded), there is a <code>testHasValue()</code> function on each
+of the metric instances:</p>
+<pre><code class="language-kotlin">assertTrue(GleanMetrics.Foo.UriCount.testHasValue())
+</code></pre>
+<p>To check the actual values, there is a <code>testGetValue()</code> function on each of the metric instances.<br />
+This function will return a datatype appropriate to the specific type of the metric it is being used
+with:</p>
+<pre><code class="language-kotlin">assertEquals(5, GleanMetrics.Foo.UriCount.testGetValue())
+</code></pre>
+<p>Note that each of these functions has it's visibility limited to the scope to only unit tests by
+making use of the <code>@VisibleForTesting</code> annotation, so the IDE should complain if you attempt to use
+them inside of client code.</p>
+<a class="header" href="#testing-metrics-for-custom-pings" id="testing-metrics-for-custom-pings"><h2>Testing metrics for custom pings</h2></a>
+<p>In order to test metrics where the metric is included in more than one ping, the test functions take
+an optional <code>pingName</code> argument.  This is the name of the ping that the metric is being sent in,
+such as <code>events</code> for the &quot;events&quot; ping, or <code>metrics</code> for the &quot;metrics&quot; ping.  This could also be a
+custom ping name that the metric is being sent in.  In most cases you should not have to supply the
+ping name to the test function and can just use the default which is the &quot;default&quot; ping that this
+metric is sent in.  You should only need to provide a <code>pingName</code> if the metric is being sent in more
+than one ping in order to identify the correct metric store.</p>
+<p>You can call the <code>testHasValue()</code> and <code>testGetValue()</code> functions with <code>pingName</code> like this:</p>
+<pre><code class="language-kotlin">GleanMetrics.Foo.UriCount.testHasValue(&quot;customPing&quot;)
+GleanMetrics.Foo.UriCount.testGetValue(&quot;customPing&quot;)
+</code></pre>
+<a class="header" href="#example-of-using-the-test-api" id="example-of-using-the-test-api"><h2>Example of using the test API</h2></a>
+<p>Here is a longer example to better illustrate the intended use of the test API:</p>
+<pre><code class="language-kotlin">// Enable testing mode
+// (Perhaps called from a @Before method so it precedes every test in the suite.)
+Glean.enableTestingMode()
+
+// Record a metric value with extra to validate against
+GleanMetrics.BrowserEngagement.click.record(
+    mapOf(
+        BrowserEngagement.clickKeys.font to &quot;Courier&quot;
+    )   
+)
+
+// Record more events without extras attached
+BrowserEngagement.click.record()
+BrowserEngagement.click.record()
+
+// Check if we collected any events into the 'click' metric
+assertTrue(BrowserEngagement.click.testHasValue())
+
+// Retrieve a snapshot of the recorded events
+val events = BrowserEngagement.click.testGetValue()
+      
+// Check if we collected all 3 events in the snapshot
+assertEquals(3, events.size)
+
+// Check extra key/value for first event in the list
+assertEquals(&quot;Courier&quot;, events.elementAt(0).extra[&quot;font&quot;])
+</code></pre>
 <a class="header" href="#metrics" id="metrics"><h1>Metrics</h1></a>
 <p>Glean supports different metric types.</p>
 <a class="header" href="#boolean" id="boolean"><h1>Boolean</h1></a>
@@ -476,6 +807,43 @@ the instructions for <a href="https://github.com/badboy/glean.rs/blob/master/doc
 <li><code>invalid_value</code>: if the string is too long</li>
 <li><code>invalid_value</code>: if the list is too long</li>
 </ul>
+<a class="header" href="#glean-pings" id="glean-pings"><h1>Glean Pings</h1></a>
+<p>Every glean ping is in JSON format and contains one or more of the <a href="#ping-sections">common sections</a>
+with shared information data.</p>
+<p>If data collection is enabled, glean provides a set of built-in pings that are assembled out of the box
+without any developer intervention.  The following is a list of these built-in pings:</p>
+<ul>
+<li><a href="user/pings/baseline.html"><code>baseline</code> ping</a></li>
+<li><code>events</code> ping (<em>not provided yet</em>)</li>
+<li><code>metrics</code> ping (<em>not provided yet</em>)</li>
+</ul>
+<p>Applications can also define and send their own custom pings (<em>not provided yet</em>).</p>
+<a class="header" href="#ping-sections" id="ping-sections"><h2>Ping sections</h2></a>
+<p>There are two standard metadata sections that are added to most pings</p>
+<p>TBD.</p>
+<a class="header" href="#the-ping_info-section" id="the-ping_info-section"><h3>The <code>ping_info</code> section</h3></a>
+<p>TBD.</p>
+<a class="header" href="#the-client_info-section" id="the-client_info-section"><h3>The <code>client_info</code> section</h3></a>
+<p>TBD.</p>
+<a class="header" href="#ping-submission" id="ping-submission"><h2>Ping submission</h2></a>
+<p>TBD.</p>
+<a class="header" href="#submitted-headers" id="submitted-headers"><h3>Submitted headers</h3></a>
+<p>TBD.</p>
+<a class="header" href="#the-baseline-ping" id="the-baseline-ping"><h1>The <code>baseline</code> ping</h1></a>
+<a class="header" href="#description" id="description"><h2>Description</h2></a>
+<p>This ping is intended to provide metrics that are managed by the library itself, and not explicitly
+set by the application or included in the application's <code>metrics.yaml</code> file.</p>
+<a class="header" href="#scheduling" id="scheduling"><h2>Scheduling</h2></a>
+<p>The <code>baseline</code> ping is automatically sent when the application is moved to the <a href="user/pings/index.html#defining-background-state">background</a>.</p>
+<a class="header" href="#contents" id="contents"><h2>Contents</h2></a>
+<hr />
+<p><em>Not yet implemented</em></p>
+<hr />
+<table><thead><tr><th> Field name </th><th> Type </th><th> Description </th></tr></thead><tbody>
+<tr><td> <code>duration</code> </td><td> Timespan </td><td> The duration, in seconds, of the last foreground session </td></tr>
+<tr><td> <code>locale</code> </td><td> String </td><td> The locale of the application </td></tr>
+</tbody></table>
+<p>The <code>baseline</code> ping also includes the common <a href="user/pings/pings.html">ping sections</a> found in all pings.</p>
 
                     </main>
 

@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["Metric",""]],"struct":[["BooleanMetric",""],["CounterMetric",""],["StringListMetric",""],["StringMetric",""],["UuidMetric",""]]});

@@ -1,0 +1,269 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Testing metrics - glean.rs - Cross-platform Telemetry library</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li><a href="../index.html"><strong aria-hidden="true">1.</strong> glean.rs</a></li><li><a href="../dev/index.html"><strong aria-hidden="true">2.</strong> Development</a></li><li><ol class="section"><li><a href="../dev/android/index.html"><strong aria-hidden="true">2.1.</strong> Android</a></li><li><ol class="section"><li><a href="../dev/android/setup-android-build-environment.html"><strong aria-hidden="true">2.1.1.</strong> Setup Build Environment</a></li></ol></li><li><a href="../dev/core/index.html"><strong aria-hidden="true">2.2.</strong> Rust Component</a></li><li><ol class="section"><li><a href="../dev/core/dependency-management.html"><strong aria-hidden="true">2.2.1.</strong> Dependency Management</a></li></ol></li><li><a href="../dev/ffi/index.html"><strong aria-hidden="true">2.3.</strong> FFI Layer</a></li><li><ol class="section"><li><a href="../dev/ffi/when-to-use-what-in-the-ffi.html"><strong aria-hidden="true">2.3.1.</strong> When/How FFI</a></li></ol></li><li><a href="../contributing.html"><strong aria-hidden="true">2.4.</strong> Contributing</a></li></ol></li><li><a href="../user/index.html"><strong aria-hidden="true">3.</strong> User</a></li><li><ol class="section"><li><a href="../user/adding-new-metrics.html"><strong aria-hidden="true">3.1.</strong> Adding new metrics</a></li><li><a href="../user/testing-metrics.html" class="active"><strong aria-hidden="true">3.2.</strong> Testing metrics</a></li><li><a href="../user/metrics/index.html"><strong aria-hidden="true">3.3.</strong> Metrics types</a></li><li><ol class="section"><li><a href="../user/metrics/boolean.html"><strong aria-hidden="true">3.3.1.</strong> Boolean</a></li><li><a href="../user/metrics/counter.html"><strong aria-hidden="true">3.3.2.</strong> Counter</a></li><li><a href="../user/metrics/string.html"><strong aria-hidden="true">3.3.3.</strong> String</a></li><li><a href="../user/metrics/string_list.html"><strong aria-hidden="true">3.3.4.</strong> String List</a></li><li><a href="../user/metrics/timespan.html"><strong aria-hidden="true">3.3.5.</strong> Timespan</a></li><li><a href="../user/metrics/timing_distribution.html"><strong aria-hidden="true">3.3.6.</strong> Timing Distribution</a></li><li><a href="../user/metrics/uuid.html"><strong aria-hidden="true">3.3.7.</strong> UUID</a></li><li><a href="../user/metrics/datetime.html"><strong aria-hidden="true">3.3.8.</strong> Datetime</a></li><li><a href="../user/metrics/event.html"><strong aria-hidden="true">3.3.9.</strong> Event</a></li><li><a href="../user/metrics/labeled_metric.html"><strong aria-hidden="true">3.3.10.</strong> Labeled Metrics</a></li></ol></li><li><a href="../user/pings/index.html"><strong aria-hidden="true">3.4.</strong> Pings</a></li><li><ol class="section"><li><a href="../user/pings/baseline.html"><strong aria-hidden="true">3.4.1.</strong> Baseline Ping</a></li></ol></li></ol></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">glean.rs - Cross-platform Telemetry library</h1> 
+
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#unit-testing-glean-metrics" id="unit-testing-glean-metrics"><h1>Unit testing Glean metrics</h1></a>
+<hr />
+<p><em>Note:</em> Testing of user-defined metrics is not yet implemented for Glean.rs.</p>
+<hr />
+<p>In order to support unit testing inside of client applications using Glean, a set of testing API
+functions have been included.  The intent is to make Glean easier to test 'out of the box' in any
+client application it may be used in.  These functions expose a way to inspect and validate recorded
+metric values within the client application but are restricted to test code only through visibility
+annotations (<code>@VisibleForTesting(otherwise = VisibleForTesting.NONE)</code>).</p>
+<a class="header" href="#general-test-api-method-semantics" id="general-test-api-method-semantics"><h2>General test API method semantics</h2></a>
+<p>In order to prevent issues with async calls when unit testing Glean, it is important to put Glean
+into testing mode by calling <code>Glean.enableTestingMode()</code>.  This will ensure that metrics are done
+recording when the other test functions are used.</p>
+<p>To check if a value exists (i.e. it has been recorded), there is a <code>testHasValue()</code> function on each
+of the metric instances:</p>
+<pre><code class="language-kotlin">assertTrue(GleanMetrics.Foo.UriCount.testHasValue())
+</code></pre>
+<p>To check the actual values, there is a <code>testGetValue()</code> function on each of the metric instances.<br />
+This function will return a datatype appropriate to the specific type of the metric it is being used
+with:</p>
+<pre><code class="language-kotlin">assertEquals(5, GleanMetrics.Foo.UriCount.testGetValue())
+</code></pre>
+<p>Note that each of these functions has it's visibility limited to the scope to only unit tests by
+making use of the <code>@VisibleForTesting</code> annotation, so the IDE should complain if you attempt to use
+them inside of client code.</p>
+<a class="header" href="#testing-metrics-for-custom-pings" id="testing-metrics-for-custom-pings"><h2>Testing metrics for custom pings</h2></a>
+<p>In order to test metrics where the metric is included in more than one ping, the test functions take
+an optional <code>pingName</code> argument.  This is the name of the ping that the metric is being sent in,
+such as <code>events</code> for the &quot;events&quot; ping, or <code>metrics</code> for the &quot;metrics&quot; ping.  This could also be a
+custom ping name that the metric is being sent in.  In most cases you should not have to supply the
+ping name to the test function and can just use the default which is the &quot;default&quot; ping that this
+metric is sent in.  You should only need to provide a <code>pingName</code> if the metric is being sent in more
+than one ping in order to identify the correct metric store.</p>
+<p>You can call the <code>testHasValue()</code> and <code>testGetValue()</code> functions with <code>pingName</code> like this:</p>
+<pre><code class="language-kotlin">GleanMetrics.Foo.UriCount.testHasValue(&quot;customPing&quot;)
+GleanMetrics.Foo.UriCount.testGetValue(&quot;customPing&quot;)
+</code></pre>
+<a class="header" href="#example-of-using-the-test-api" id="example-of-using-the-test-api"><h2>Example of using the test API</h2></a>
+<p>Here is a longer example to better illustrate the intended use of the test API:</p>
+<pre><code class="language-kotlin">// Enable testing mode
+// (Perhaps called from a @Before method so it precedes every test in the suite.)
+Glean.enableTestingMode()
+
+// Record a metric value with extra to validate against
+GleanMetrics.BrowserEngagement.click.record(
+    mapOf(
+        BrowserEngagement.clickKeys.font to &quot;Courier&quot;
+    )   
+)
+
+// Record more events without extras attached
+BrowserEngagement.click.record()
+BrowserEngagement.click.record()
+
+// Check if we collected any events into the 'click' metric
+assertTrue(BrowserEngagement.click.testHasValue())
+
+// Retrieve a snapshot of the recorded events
+val events = BrowserEngagement.click.testGetValue()
+      
+// Check if we collected all 3 events in the snapshot
+assertEquals(3, events.size)
+
+// Check extra key/value for first event in the list
+assertEquals(&quot;Courier&quot;, events.elementAt(0).extra[&quot;font&quot;])
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../user/adding-new-metrics.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../user/metrics/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../user/adding-new-metrics.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../user/metrics/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Dependency Management - glean.rs - Cross-platform Telemetry library</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li><a href="../../index.html"><strong aria-hidden="true">1.</strong> glean.rs</a></li><li><a href="../../dev/index.html"><strong aria-hidden="true">2.</strong> Development</a></li><li><ol class="section"><li><a href="../../dev/android/index.html"><strong aria-hidden="true">2.1.</strong> Android</a></li><li><ol class="section"><li><a href="../../dev/android/setup-android-build-environment.html"><strong aria-hidden="true">2.1.1.</strong> Setup Build Environment</a></li></ol></li><li><a href="../../dev/core/index.html"><strong aria-hidden="true">2.2.</strong> Rust Component</a></li><li><ol class="section"><li><a href="../../dev/core/dependency-management.html" class="active"><strong aria-hidden="true">2.2.1.</strong> Dependency Management</a></li></ol></li><li><a href="../../dev/ffi/index.html"><strong aria-hidden="true">2.3.</strong> FFI Layer</a></li><li><ol class="section"><li><a href="../../dev/ffi/when-to-use-what-in-the-ffi.html"><strong aria-hidden="true">2.3.1.</strong> When/How FFI</a></li></ol></li><li><a href="../../contributing.html"><strong aria-hidden="true">2.4.</strong> Contributing</a></li></ol></li><li><a href="../../user/index.html"><strong aria-hidden="true">3.</strong> User</a></li><li><ol class="section"><li><a href="../../user/adding-new-metrics.html"><strong aria-hidden="true">3.1.</strong> Adding new metrics</a></li><li><a href="../../user/testing-metrics.html"><strong aria-hidden="true">3.2.</strong> Testing metrics</a></li><li><a href="../../user/metrics/index.html"><strong aria-hidden="true">3.3.</strong> Metrics types</a></li><li><ol class="section"><li><a href="../../user/metrics/boolean.html"><strong aria-hidden="true">3.3.1.</strong> Boolean</a></li><li><a href="../../user/metrics/counter.html"><strong aria-hidden="true">3.3.2.</strong> Counter</a></li><li><a href="../../user/metrics/string.html"><strong aria-hidden="true">3.3.3.</strong> String</a></li><li><a href="../../user/metrics/string_list.html"><strong aria-hidden="true">3.3.4.</strong> String List</a></li><li><a href="../../user/metrics/timespan.html"><strong aria-hidden="true">3.3.5.</strong> Timespan</a></li><li><a href="../../user/metrics/timing_distribution.html"><strong aria-hidden="true">3.3.6.</strong> Timing Distribution</a></li><li><a href="../../user/metrics/uuid.html"><strong aria-hidden="true">3.3.7.</strong> UUID</a></li><li><a href="../../user/metrics/datetime.html"><strong aria-hidden="true">3.3.8.</strong> Datetime</a></li><li><a href="../../user/metrics/event.html"><strong aria-hidden="true">3.3.9.</strong> Event</a></li><li><a href="../../user/metrics/labeled_metric.html"><strong aria-hidden="true">3.3.10.</strong> Labeled Metrics</a></li></ol></li><li><a href="../../user/pings/index.html"><strong aria-hidden="true">3.4.</strong> Pings</a></li><li><ol class="section"><li><a href="../../user/pings/baseline.html"><strong aria-hidden="true">3.4.1.</strong> Baseline Ping</a></li></ol></li></ol></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">glean.rs - Cross-platform Telemetry library</h1> 
+
+                        <div class="right-buttons">
+                            <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#dependency-management-guidelines" id="dependency-management-guidelines"><h1>Dependency Management Guidelines</h1></a>
+<hr />
+<p>This is currently copied from <a href="https://github.com/mozilla/application-services/blob/4347ea9c590d2319db1c994680832cc20bc3758d/docs/dependency-management.md">application-services documentation</a>.</p>
+<hr />
+<p>This repo uses third-party code from a variety of sources, so we need to be mindful
+of how these dependencies will affect our consumers.  Considerations include:</p>
+<ul>
+<li>General code quality.</li>
+<li><a href="https://www.mozilla.org/en-US/MPL/license-policy/#Licenses_Compatible_with_the_MPL">Licensing compatibility</a>.</li>
+<li>Handling of security vulnerabilities.</li>
+<li>The potential for <a href="https://medium.com/intrinsic/compromised-npm-package-event-stream-d47d08605502">supply-chain compromise</a>.</li>
+</ul>
+<p>We're still evolving our policies in this area, but these are the
+guidelines we've developed so far.</p>
+<a class="header" href="#rust-code" id="rust-code"><h2>Rust Code</h2></a>
+<p>Unlike <a href="https://firefox-source-docs.mozilla.org/build/buildsystem/rust.html">Firefox</a>,
+we do not vendor third-party source code directly into the repo.  Instead we rely on
+<code>Cargo.lock</code> and its hash validation to ensure that each build uses an identical copy
+of all third-party crates.  These are the measures we use for ongoing maintence of our
+existing dependencies:</p>
+<ul>
+<li>Check <code>Cargo.lock</code> into the repository.</li>
+<li>Generate built artifacts using the <code>--locked</code> flag to <code>cargo build</code>, as an additional
+assurance that the existing <code>Cargo.lock</code> will be respected.
+<ul>
+<li>TODO: how to actually make this happen via rust-android-gradle plugin?</li>
+</ul>
+</li>
+<li>Regularly run <a href="https://github.com/RustSec/cargo-audit">cargo-audit</a> in CI to alert us to
+security problems in our dependencies.
+<ul>
+<li>It runs on every PR, and once per hour as a scheduled job with failures reported to slack.</li>
+</ul>
+</li>
+<li>Use <a href="https://github.com/onur/cargo-license">cargo-license</a> for a basic licence-compatibility
+check as part of CI, to guard against human error.</li>
+</ul>
+<p>Adding a new dependency, whether we like it or not, is a big deal - that dependency and everything
+it brings with it will become part of Firefox-branded products that we ship to end users.
+We try to balance this responsibility against the many benefits of using existing code, as follows:</p>
+<ul>
+<li>In general, be conservative in adding new third-party dependencies.
+<ul>
+<li>For trivial functionality, consider just writing it yourself.
+Remember the cautionary tale of <a href="https://www.theregister.co.uk/2016/03/23/npm_left_pad_chaos/">left-pad</a>.</li>
+<li>Check if we already have a crate in our dependency tree that can provide the needed functionality.</li>
+</ul>
+</li>
+<li>Prefer crates that have a a high level of due-dilligence already applied, such as:
+<ul>
+<li>Crates that are <a href="https://dxr.mozilla.org/mozilla-central/source/third_party/rust">already vendored into Firefox</a>.</li>
+<li>Crates from <a href="https://github.com/rust-lang-nursery">rust-lang-nursery</a>.</li>
+<li>Crates that appear to be widely used in the Rust community.</li>
+</ul>
+</li>
+<li>Check that it is clearly licensed and is <a href="https://www.mozilla.org/en-US/MPL/license-policy/#Licenses_Compatible_with_the_MPL">MPL-2.0 compatible</a>.</li>
+<li>Take the time to investigate the crate's source and ensure it is suitably high-quality.
+<ul>
+<li>Be especially wary of uses of <code>unsafe</code>, or of code that is unusually resource-intensive to build.</li>
+<li>Dev dependencies do not require as much scrutiny as dependencies that will ship in consuming applications,
+but should still be given some thought.
+<ul>
+<li>There is still the potential for supply-chain compromise with dev dependencies!</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Explicitly describe your consideration of these points in the PR that introduces the new dependency.</li>
+</ul>
+<p>Updating to new versions of existing dependencies is a normal part of software development
+and is not accompanied by any partiulcar ceremony.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../dev/core/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../dev/ffi/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../../dev/core/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../../dev/ffi/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
