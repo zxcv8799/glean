@@ -27,13 +27,14 @@
 <span id="27">27</span>
 <span id="28">28</span>
 <span id="29">29</span>
+<span id="30">30</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">metrics</span>::<span class="kw-2">*</span>, <span class="ident">CommonMetricData</span>, <span class="ident">Lifetime</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CoreMetrics</span> {
     <span class="kw">pub</span> <span class="ident">client_id</span>: <span class="ident">UuidMetric</span>,
-    <span class="kw">pub</span> <span class="ident">first_run</span>: <span class="ident">BooleanMetric</span>,
+    <span class="kw">pub</span> <span class="ident">first_run_date</span>: <span class="ident">StringMetric</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">CoreMetrics</span> {
@@ -43,15 +44,16 @@
                 <span class="ident">name</span>: <span class="string">&quot;client_id&quot;</span>.<span class="ident">into</span>(),
                 <span class="ident">category</span>: <span class="string">&quot;&quot;</span>.<span class="ident">into</span>(),
                 <span class="ident">send_in_pings</span>: <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;glean_client_info&quot;</span>.<span class="ident">into</span>()],
-                <span class="ident">lifetime</span>: <span class="ident">Lifetime</span>::<span class="ident">Application</span>,
+                <span class="ident">lifetime</span>: <span class="ident">Lifetime</span>::<span class="ident">User</span>,
                 <span class="ident">disabled</span>: <span class="bool-val">false</span>,
             }),
 
-            <span class="ident">first_run</span>: <span class="ident">BooleanMetric</span>::<span class="ident">new</span>(<span class="ident">CommonMetricData</span> {
-                <span class="ident">name</span>: <span class="string">&quot;first_run&quot;</span>.<span class="ident">into</span>(),
+            <span class="comment">// TODO: this should really be a &quot;DatetimeType&quot;.</span>
+            <span class="ident">first_run_date</span>: <span class="ident">StringMetric</span>::<span class="ident">new</span>(<span class="ident">CommonMetricData</span> {
+                <span class="ident">name</span>: <span class="string">&quot;first_run_date&quot;</span>.<span class="ident">into</span>(),
                 <span class="ident">category</span>: <span class="string">&quot;&quot;</span>.<span class="ident">into</span>(),
                 <span class="ident">send_in_pings</span>: <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;glean_client_info&quot;</span>.<span class="ident">into</span>()],
-                <span class="ident">lifetime</span>: <span class="ident">Lifetime</span>::<span class="ident">Application</span>,
+                <span class="ident">lifetime</span>: <span class="ident">Lifetime</span>::<span class="ident">User</span>,
                 <span class="ident">disabled</span>: <span class="bool-val">false</span>,
             }),
         }
