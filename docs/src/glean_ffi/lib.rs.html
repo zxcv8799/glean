@@ -259,7 +259,7 @@
 
 <span class="doccomment">/// Create a vector of strings from a raw C-like string array</span>
 <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_raw_string_array</span>(<span class="ident">arr</span>: <span class="ident">RawStringArray</span>, <span class="ident">len</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
-    <span class="kw">if</span> <span class="ident">len</span> <span class="op">==</span> <span class="number">0</span> {
+    <span class="kw">if</span> <span class="ident">arr</span>.<span class="ident">is_null</span>() <span class="op">||</span> <span class="ident">len</span> <span class="op">==</span> <span class="number">0</span> {
         <span class="kw">return</span> <span class="macro">vec</span><span class="macro">!</span>[];
     }
 
