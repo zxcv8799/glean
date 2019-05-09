@@ -232,6 +232,15 @@
 <span id="232">232</span>
 <span id="233">233</span>
 <span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">redundant_closure</span>)]</span>
 
@@ -312,6 +321,15 @@
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">err</span> <span class="op">=</span> <span class="ident">ExternError</span>::<span class="ident">success</span>();
     <span class="ident">GLEAN</span>.<span class="ident">call_with_output_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">err</span>, <span class="ident">glean_handle</span>, <span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
         <span class="ident">glean</span>.<span class="ident">set_upload_enabled</span>(<span class="ident">flag</span> <span class="op">!=</span> <span class="number">0</span>)
+    })
+}
+
+<span class="attribute">#[<span class="ident">no_mangle</span>]</span>
+<span class="kw">pub</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">glean_send_ping</span>(<span class="ident">glean_handle</span>: <span class="ident">u64</span>, <span class="ident">ping_name</span>: <span class="ident">FfiStr</span>) {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">err</span> <span class="op">=</span> <span class="ident">ExternError</span>::<span class="ident">success</span>();
+    <span class="ident">GLEAN</span>.<span class="ident">call_with_output</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">err</span>, <span class="ident">glean_handle</span>, <span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
+        <span class="comment">// FIXME: Error handling</span>
+        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">glean</span>.<span class="ident">send_ping</span>(<span class="ident">ping_name</span>.<span class="ident">as_str</span>());
     })
 }
 
