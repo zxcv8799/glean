@@ -479,7 +479,7 @@
         <span class="ident">COUNTER_METRICS</span>.<span class="ident">call_with_output</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">err</span>, <span class="ident">metric_id</span>, <span class="op">|</span><span class="ident">metric</span><span class="op">|</span> {
             <span class="ident">metric</span>
                 .<span class="ident">test_get_value</span>(<span class="ident">glean</span>, <span class="ident">storage_name</span>.<span class="ident">as_str</span>())
-                .<span class="ident">is_none</span>()
+                .<span class="ident">is_some</span>()
         })
     })
 }
