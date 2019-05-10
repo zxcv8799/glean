@@ -32,10 +32,7 @@
     </head>
     <body class="light">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
-            var path_to_root = "";
-            var default_theme = "light";
-        </script>
+        <script type="text/javascript">var path_to_root = "";</script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script type="text/javascript">
@@ -57,7 +54,7 @@
         <script type="text/javascript">
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
-            if (theme === null || theme === undefined) { theme = default_theme; }
+            if (theme === null || theme === undefined) { theme = 'light'; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
         </script>
@@ -92,7 +89,7 @@
                                 <i class="fa fa-paint-brush"></i>
                             </button>
                             <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
                                 <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                                 <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                                 <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -111,7 +108,6 @@
                             <a href="print.html" title="Print this book" aria-label="Print this book">
                                 <i id="print-button" class="fa fa-print"></i>
                             </a>
-                            
                         </div>
                     </div>
                 </div>
@@ -543,7 +539,7 @@ these cases:</p>
 <ol>
 <li>
 <p>Passing data using protobufs. See the
-&quot;<a href="dev/ffi/passing-protobuf-data-over-ffi.html">Using protobuf-encoded data over Rust FFI</a>&quot;
+&quot;<a href="passing-protobuf-data-over-ffi.html">Using protobuf-encoded data over Rust FFI</a>&quot;
 document for details on how to do this. We recommend this for all new use cases, unless
 you have a specific reason that JSON is better (e.g. semi-opaque JSON encoded data is
 desired on the other side).</p>
@@ -611,7 +607,7 @@ This file should be at the root of the application or library module (the same d
 The format of that file is documented <a href="https://mozilla.github.io/glean_parser/metrics-yaml.html">here</a>.</p>
 <p>When adding a new metric, the workflow is:</p>
 <ul>
-<li>Decide on which <a href="user/metrics/index.html">metric type</a> you want to use.</li>
+<li>Decide on which <a href="metrics/index.html">metric type</a> you want to use.</li>
 <li>Add a new entry to <a href="#The-metricsyaml-file"><code>metrics.yaml</code></a>.</li>
 <li>Add code to your project to record into the metric by calling Glean.</li>
 </ul>
@@ -813,7 +809,7 @@ with shared information data.</p>
 <p>If data collection is enabled, glean provides a set of built-in pings that are assembled out of the box
 without any developer intervention.  The following is a list of these built-in pings:</p>
 <ul>
-<li><a href="user/pings/baseline.html"><code>baseline</code> ping</a></li>
+<li><a href="baseline.html"><code>baseline</code> ping</a></li>
 <li><code>events</code> ping (<em>not provided yet</em>)</li>
 <li><code>metrics</code> ping (<em>not provided yet</em>)</li>
 </ul>
@@ -834,7 +830,7 @@ without any developer intervention.  The following is a list of these built-in p
 <p>This ping is intended to provide metrics that are managed by the library itself, and not explicitly
 set by the application or included in the application's <code>metrics.yaml</code> file.</p>
 <a class="header" href="#scheduling" id="scheduling"><h2>Scheduling</h2></a>
-<p>The <code>baseline</code> ping is automatically sent when the application is moved to the <a href="user/pings/index.html#defining-background-state">background</a>.</p>
+<p>The <code>baseline</code> ping is automatically sent when the application is moved to the <a href="index.html#defining-background-state">background</a>.</p>
 <a class="header" href="#contents" id="contents"><h2>Contents</h2></a>
 <hr />
 <p><em>Not yet implemented</em></p>
@@ -843,7 +839,7 @@ set by the application or included in the application's <code>metrics.yaml</code
 <tr><td> <code>duration</code> </td><td> Timespan </td><td> The duration, in seconds, of the last foreground session </td></tr>
 <tr><td> <code>locale</code> </td><td> String </td><td> The locale of the application </td></tr>
 </tbody></table>
-<p>The <code>baseline</code> ping also includes the common <a href="user/pings/pings.html">ping sections</a> found in all pings.</p>
+<p>The <code>baseline</code> ping also includes the common <a href="pings.html">ping sections</a> found in all pings.</p>
 
                     </main>
 
