@@ -145,109 +145,50 @@ It started out as an <a href="https://github.com/mozilla-mobile/android-componen
 <p><strong>Note: <code>glean.rs</code> is in development. It's not finished, not used and not documented yet.</strong></p>
 <a class="header" href="#developer-documentation" id="developer-documentation"><h1>Developer Documentation</h1></a>
 <a class="header" href="#setup-the-android-build-environment" id="setup-the-android-build-environment"><h1>Setup the Android Build Environment</h1></a>
-<hr />
-<p><strong>Note: This is currently out-of-date. We'll update it with proper instructions soon.</strong></p>
-<hr />
 <a class="header" href="#doing-a-local-build-of-the-android-components" id="doing-a-local-build-of-the-android-components"><h2>Doing a local build of the Android Components:</h2></a>
 <p>This document describes how to make local builds of the Android components in
 this repository. Most consumers of these components <em>do not</em> need to follow
 this process, but will instead use pre-built components [todo: link to this]</p>
-<p>This document, and the build process itself, is a work-in-progress - please file issues (or just update the wiki!) if you notice errors or omissions.</p>
 <a class="header" href="#prepare-your-build-environment" id="prepare-your-build-environment"><h2>Prepare your build environment</h2></a>
-<p><em>NOTE: This section is almost certainly incomplete - given it is typically
-only done once, things have probably been forgotten or over-simplified.
-Please file PRs if you notice errors or omissions here</em></p>
-<p>This process should work OK on Mac and Linux. It also works on <a href="#using-windows">Windows via WSL by following these instructions</a>.</p>
 <p>Typically, this process only needs to be run once, although periodically you
 may need to repeat some steps (eg, rust updates should be done periodically)</p>
+<a class="header" href="#setting-up-android-dependencies" id="setting-up-android-dependencies"><h3>Setting up Android dependencies</h3></a>
 <p>At the end of this process you should have the following environment variables set up.</p>
 <ul>
-<li><code>ANDROID_NDK_ROOT</code></li>
-<li><code>ANDROID_NDK_TOOLCHAIN_DIR</code></li>
-<li><code>ANDROID_NDK_API_VERSION</code></li>
 <li><code>ANDROID_HOME</code></li>
-<li><code>JAVA_HOME</code></li>
+<li><code>NDK_HOME</code></li>
 </ul>
-<p>These variables are required every time you build, so you should add them to
-a rc file or similar so they persist between reboots etc.</p>
-<ol>
-<li>
-<p>Install NDK r15c from https://developer.android.com/ndk/downloads/older_releases
-(yes, this sucks, but newer versions don't understand the <code>--deprecated-headers</code>
-argument required to build OpenSSL against a v21 toolchain).</p>
+<p>The easiest way to install all the dependencies (and automatically
+handle updates), is by using <a href="https://developer.android.com/studio/index.html">Android Studio</a>.
+Once this is installed, the following dependencies can be installed through it:</p>
 <ul>
-<li>Extract it, put it somewhere (<code>$HOME/.android-ndk-r15c</code> is a reasonable
-choice, but it doesn't matter), and set <code>ANDROID_NDK_ROOT</code> to this location.</li>
+<li>Android SDK Tools</li>
+<li>NDK</li>
+<li>CMake</li>
+<li>LLDB</li>
 </ul>
-</li>
-<li>
-<p>Install <code>rustup</code> from https://rustup.rs:</p>
+<p>To install a dependency, open Android Studio and select <code>Tools &gt; SDK Manager &gt; SDK Tools</code>. Then tick the boxes corrensponding to the dependencies listed above.</p>
+<p>With the dependencies installed, note down the <code>Android SDK Location</code> in <code>Tools &gt; SDK Manager</code>. Set the <code>ANDROID_HOME</code> environment variable to that path. The <code>NDK_HOME</code> can be set to <code>NDK_HOME=$ANDROID_HOME/ndk-bundle</code>.</p>
+<a class="header" href="#setting-up-rust" id="setting-up-rust"><h3>Setting up Rust</h3></a>
+<p>Rust can be installed using <code>rustup</code>, with the following commands:</p>
 <ul>
-<li>If you already have it, run <code>rustup update</code></li>
-<li>Run <code>rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android x86_64-linux-android</code></li>
-<li>Run <code>rustup toolchain add beta</code> (TODO: this no longer appears necessary).</li>
+<li><code>curl https://sh.rustup.rs -sSf | sh</code></li>
+<li><code>rustup update</code></li>
 </ul>
-</li>
-<li>
-<p>Ensure your clone of <code>mozilla/application-services</code> is up to date.</p>
-</li>
-<li>
-<p>Setup your NDK toolchains.</p>
+<p>Platform specific toolchains need to be installed for Rust. This can be
+done using the <code>rustup target</code> command. In order to enable building to real
+devices and Android emulators, the following targets need to be installed:</p>
 <ul>
-<li>Create a directory where we'll install the standalone toolchains.
-<ul>
-<li><code>mkdir -p ~/.ndk-standalone-toolchains</code></li>
-<li><code>export ANDROID_NDK_TOOLCHAIN_DIR=$HOME/.ndk-standalone-toolchains</code></li>
+<li><code>rustup target add aarch64-linux-android</code></li>
+<li><code>rustup target add armv7-linux-androideabi</code></li>
+<li><code>rustup target add i686-linux-android</code></li>
+<li><code>rustup target add x86_64-linux-android</code></li>
 </ul>
-</li>
-<li><code>cd path/to/application-services/libs</code></li>
-<li><code>./setup_toolchains_local.sh $ANDROID_NDK_ROOT</code>
-<ul>
-<li>Say yes if/when prompted.</li>
-<li>When this is done, it should have set <code>$ANDROID_NDK_API_VERSION</code> (to 21),
-but you should add this to an rcfile as above.</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>Install or locate Java</p>
-<ul>
-<li>Either install Java, or, if Android Studio is installed, you can probably find one
-installed in a <code>jre</code> directory under the Android Studio directory.</li>
-<li>Set <code>JAVA_HOME</code> to this location and add it to your rc file.</li>
-</ul>
-</li>
-<li>
-<p>Install or locate the Android SDKs</p>
-<ul>
-<li>Install the Android SDKs. If Android Studio is involved, it may have already installed
-them somewhere - use the &quot;SDK Manager&quot; to identify this location.</li>
-<li>Set <code>ANDROID_HOME</code> to this location and add it to your rc file.</li>
-</ul>
-</li>
-<li>
-<p>Build openssl and sqlcipher</p>
-<ul>
-<li><code>cd path/to/application-services/libs</code> (Same dir you were just in for step 4)</li>
-<li><code>./build-all.sh android</code> (Go make some coffee or something, this will take
-some time as it has to compile sqlcipher and openssl for x86, x86_64, arm, and arm64).</li>
-<li>Note that if something goes wrong here
-<ul>
-<li>Check all environment variables mentions above are set and correct.</li>
-<li>The following directories should exist, and point to standalone NDK
-toolchains <code>$ANDROID_NDK_TOOLCHAIN_DIR/{x86,x86_64,arm,arm64}-$ANDROID_NDK_API_VERSION</code>.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
 <a class="header" href="#building" id="building"><h2>Building</h2></a>
-<p>Having done the above, the build process is the easy part! Again, ensure all
-environment variables mentioned above are in place.</p>
+<p>This should be relatively straightforward and painless:</p>
 <ol>
 <li>
-<p>Ensure your clone of application-services is up-to-date.</p>
+<p>Ensure your repository is up-to-date.</p>
 </li>
 <li>
 <p>Ensure rust is up-to-date by running <code>rustup</code></p>
@@ -259,95 +200,14 @@ environment variables mentioned above are in place.</p>
 of tasks by executing <code>./gradlew tasks</code>.</p>
 </li>
 </ol>
-<a class="header" href="#publishing-the-components-to-your-local-maven-repository" id="publishing-the-components-to-your-local-maven-repository"><h3>Publishing the components to your local maven repository.</h3></a>
-<p>The easiest way to use the build is to have your Android project reference the component from your local maven repository - this is done by the <code>publishToMavenLocal</code> task - so:</p>
-<pre><code>./gradlew publishToMavenLocal
-</code></pre>
-<p>should work. Check your <code>~/.m2</code> directory (which is your local maven repo) for the components.</p>
-<p>You can also publish single projects - eg:</p>
-<pre><code>./gradlew service-sync-places:publishToMavenLocal
-</code></pre>
-<p>For more information about using the local maven repo, see this <a href="https://mozilla-mobile.github.io/android-components/contributing/testing-components-inside-app">android components guide</a></p>
-<a class="header" href="#other-build-types" id="other-build-types"><h3>Other build types</h3></a>
-<p>If you just want the build artifacts, you probably want one of the <code>assemble</code> tasks - either
-<code>assembleDebug</code> or <code>assembleRelease</code>.</p>
-<p>For example, to build a debug version of the places library, the command you
-want is <code>./gradlew places-library:assembleDebug</code></p>
-<p>After building, you should find the built artifact under the <code>target</code> directory,
-with sub-directories for each Android architecture. For example, after executing:</p>
-<pre><code>% ./gradlew places-library:assembleDebug
-</code></pre>
-<p>you will find:</p>
-<pre><code>target/aarch64-linux-android/release/libplaces_ffi.so
-target/x86_64-linux-android/release/libplaces_ffi.so
-target/i686-linux-android/release/libplaces_ffi.so
-target/armv7-linux-androideabi/release/libplaces_ffi.so
-</code></pre>
-<p>(You will probably notice that even though as used <code>assembleDebug</code>, the directory names are <code>release</code> - this may change in the future)</p>
-<p>You should also find the .kt files for the project somewhere there and in the right directory structure if that turns out to be useful.</p>
-<a class="header" href="#using-windows" id="using-windows"><h1>Using Windows</h1></a>
-<p>It's currently tricky to get some of these builds working on Windows, primarily due to our use of <code>sqlcipher</code> and <code>openssl</code>. However, by using the Windows Subsystem for Linux, it is possible to get builds working, but still have them published to your &quot;native&quot; local maven cache so it's available for use by a &quot;native&quot; Android Studio.</p>
-<p>As above, this document may be incomplete, so please edit or open PRs where necessary.</p>
-<p>In general, you will follow the exact same process outlined above, with one or 2 unique twists.</p>
-<a class="header" href="#setting-up-the-build-environment" id="setting-up-the-build-environment"><h2>Setting up the build environment</h2></a>
-<p>You need to install most of the build tools in WSL. This means you end up with many tools installed twice - once in WSL and once in &quot;native&quot; Windows - but the only cost of that is disk-space.</p>
-<p>You will need the following tools in WSL:</p>
+<p>The above can be skipped if using <code>Android Studio</code>. The project directory can be imported
+and all the build details can be left to the IDE.</p>
+<a class="header" href="#faq" id="faq"><h2>FAQ</h2></a>
 <ul>
-<li>
-<p>unzip - <code>sudo apt install unzip</code></p>
-</li>
-<li>
-<p>python - <code>sudo apt install python</code></p>
-</li>
-<li>
-<p>java - you may already have it? try <code>java -version</code>. Java ended up causing me grief (stuck at 100% CPU doing nothing), but google pointed at one popular way of installing java:</p>
-<pre><code>sudo add-apt-repository ppa:webupd8team/java
-sudo apt-get update
-sudo apt-get install oracle-java8-installer
-sudo apt install oracle-java8-set-default
-</code></pre>
-</li>
-<li>
-<p>tcl, used for sqlcipher builds - <code>sudo apt install tcl-dev</code></p>
-</li>
-<li>
-<p>Android SDKs - this process is much the same as for normal Linux - roughly</p>
-<ul>
-<li>
-<p>visit https://developer.android.com/studio/, at the bottom of the page locate the current SDKs for linux
-at time of writing, this is https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip</p>
-<pre><code>cd ~
-mkdir android-sdk
-cd android-sdk
-unzip {path-to.zip}
-export ANDROID_HOME=$HOME/android-sdk
-$ANDROID_HOME/tools/bin/sdkmanager &quot;platforms;android-26&quot;
-$ANDROID_HOME/tools/bin/sdkmanager --licenses
-</code></pre>
-</li>
+<li><strong>Q: Android Studio complains about Python not being found when building.</strong></li>
+<li>A: Make sure that the <code>python</code> binary is on your <code>PATH</code>. On Windows, in addition to that,
+it might be required to add its full path to the <code>rust.pythonCommand</code> entry in  <code>$project_root/local.properties</code>.</li>
 </ul>
-</li>
-</ul>
-<p>(Note - it may be necessary to execute <code>$ANDROID_HOME/tools/bin/sdkmanager &quot;build-tools;26.0.2&quot; &quot;platform-tools&quot; &quot;platforms;android-26&quot; &quot;tools&quot;</code>, but may not! See also <a href="https://gist.github.com/fdmnio/fd42caec2e5a7e93e12943376373b7d0">this gist</a> which google found for me and might have useful info.</p>
-<ul>
-<li>Follow all the other steps above - eg, you still need the NDK setup in WSL and all environment variables above set.</li>
-</ul>
-<a class="header" href="#configure-maven" id="configure-maven"><h2>Configure Maven</h2></a>
-<p>We now want to configure maven to use the native windows maven repository - then, when doing <code>./gradlew install</code> from WSL, it ends up in the Windows maven repo.</p>
-<ul>
-<li>
-<p>Execute <code>sudo apt install maven</code> - this should have created a <code>~/.m2</code> folder as the WSL maven repository. In this directory, create a file <code>~/.m2/settings.xml</code> with the content:</p>
-<pre><code>&lt;settings&gt;
-  &lt;localRepository&gt;/mnt/c/Users/{username}/.m2/repository&lt;/localRepository&gt;
-&lt;/settings&gt;
-</code></pre>
-<p>(obviously with {username} adjusted appropriately)</p>
-</li>
-<li>
-<p>Now you should be ready to roll - <code>./gradlew install</code> should complete and publish the components to your native maven repo!</p>
-</li>
-</ul>
-<p>\o/</p>
 <a class="header" href="#glean-core---rust-component" id="glean-core---rust-component"><h1>glean-core - Rust component</h1></a>
 <p>The majority of Glean is implemented as a Rust component, to be usable across all platforms.</p>
 <p>This includes:</p>
