@@ -134,12 +134,6 @@
 <span id="134">134</span>
 <span id="135">135</span>
 <span id="136">136</span>
-<span id="137">137</span>
-<span id="138">138</span>
-<span id="139">139</span>
-<span id="140">140</span>
-<span id="141">141</span>
-<span id="142">142</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -148,7 +142,7 @@
 <span class="attribute">#![<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">new_without_default</span>)]</span>
 <span class="attribute">#![<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">redundant_closure</span>)]</span>
 
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">PathBuf</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::{<span class="ident">Path</span>, <span class="ident">PathBuf</span>};
 
 <span class="kw">use</span> <span class="ident">uuid</span>::<span class="ident">Uuid</span>;
 
@@ -178,38 +172,34 @@
     <span class="ident">upload_enabled</span>: <span class="ident">bool</span>,
     <span class="ident">data_store</span>: <span class="ident">Database</span>,
     <span class="ident">core_metrics</span>: <span class="ident">CoreMetrics</span>,
-    <span class="ident">data_path</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">PathBuf</span><span class="op">&gt;</span>,
-    <span class="ident">application_id</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="ident">data_path</span>: <span class="ident">PathBuf</span>,
+    <span class="ident">application_id</span>: <span class="ident">String</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Glean</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
-        <span class="ident">log</span>::<span class="macro">info</span><span class="macro">!</span>(<span class="string">&quot;Creating new glean&quot;</span>);
-        <span class="self">Self</span> {
-            <span class="ident">initialized</span>: <span class="bool-val">false</span>,
-            <span class="ident">upload_enabled</span>: <span class="bool-val">true</span>,
-            <span class="ident">data_store</span>: <span class="ident">Database</span>::<span class="ident">new</span>(),
-            <span class="ident">core_metrics</span>: <span class="ident">CoreMetrics</span>::<span class="ident">new</span>(),
-            <span class="ident">data_path</span>: <span class="prelude-val">None</span>,
-            <span class="ident">application_id</span>: <span class="prelude-val">None</span>,
-        }
-    }
-
     <span class="doccomment">/// Initialize the global Glean object.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This will create the necessary directories and files in `data_path`.</span>
     <span class="doccomment">/// This will also initialize the core metrics.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">initialize</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">data_path</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">application_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
-        <span class="self">self</span>.<span class="ident">data_store</span>.<span class="ident">initialize</span>(<span class="ident">data_path</span>);
-        <span class="self">self</span>.<span class="ident">initialize_core_metrics</span>(<span class="ident">data_path</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">data_path</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">application_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">log</span>::<span class="macro">info</span><span class="macro">!</span>(<span class="string">&quot;Creating new glean&quot;</span>);
 
-        <span class="self">self</span>.<span class="ident">data_path</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">PathBuf</span>::<span class="ident">from</span>(<span class="ident">data_path</span>));
-        <span class="self">self</span>.<span class="ident">application_id</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">sanitize_application_id</span>(<span class="ident">application_id</span>));
-        <span class="self">self</span>.<span class="ident">initialized</span> <span class="op">=</span> <span class="bool-val">true</span>;
+        <span class="kw">let</span> <span class="ident">application_id</span> <span class="op">=</span> <span class="ident">sanitize_application_id</span>(<span class="ident">application_id</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">glean</span> <span class="op">=</span> <span class="self">Self</span> {
+            <span class="ident">initialized</span>: <span class="bool-val">true</span>,
+            <span class="ident">upload_enabled</span>: <span class="bool-val">true</span>,
+            <span class="ident">data_store</span>: <span class="ident">Database</span>::<span class="ident">new</span>(<span class="ident">data_path</span>),
+            <span class="ident">core_metrics</span>: <span class="ident">CoreMetrics</span>::<span class="ident">new</span>(),
+            <span class="ident">data_path</span>: <span class="ident">PathBuf</span>::<span class="ident">from</span>(<span class="ident">data_path</span>),
+            <span class="ident">application_id</span>,
+        };
+        <span class="ident">glean</span>.<span class="ident">initialize_core_metrics</span>();
+        <span class="ident">glean</span>.<span class="ident">initialized</span> <span class="op">=</span> <span class="bool-val">true</span>;
+        <span class="ident">glean</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">initialize_core_metrics</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">data_path</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
-        <span class="kw">if</span> <span class="ident">first_run</span>::<span class="ident">is_first_run</span>(<span class="ident">data_path</span>) {
+    <span class="kw">fn</span> <span class="ident">initialize_core_metrics</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="kw">if</span> <span class="ident">first_run</span>::<span class="ident">is_first_run</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">data_path</span>) {
             <span class="self">self</span>.<span class="ident">core_metrics</span>
                 .<span class="ident">first_run_date</span>
                 .<span class="ident">set</span>(<span class="self">self</span>, <span class="string">&quot;2019-05-09-04:00&quot;</span>);
@@ -237,13 +227,11 @@
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_application_id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="comment">// TODO: Error handling?</span>
-        <span class="self">self</span>.<span class="ident">application_id</span>.<span class="ident">as_ref</span>().<span class="ident">unwrap</span>()
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">application_id</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_data_path</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">PathBuf</span> {
-        <span class="comment">// TODO: Error handling?</span>
-        <span class="self">self</span>.<span class="ident">data_path</span>.<span class="ident">as_ref</span>().<span class="ident">unwrap</span>()
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_data_path</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Path</span> {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">data_path</span>
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">storage</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Database</span> {
