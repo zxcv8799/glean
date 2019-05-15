@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["ErrorType",""],["Lifetime",""]],"mod":[["metrics",""],["ping",""],["storage",""]],"struct":[["CommonMetricData",""],["Glean",""]]});
+initSidebarItems({"enum":[["ErrorType",""],["Lifetime",""]],"mod":[["metrics",""],["ping",""],["storage",""]],"struct":[["CommonMetricData",""],["Error","A specialized [`Error`] type for this crate's operations."],["Glean",""]],"type":[["Result","A specialized [`Result`] type for this crate's operations."]]});
