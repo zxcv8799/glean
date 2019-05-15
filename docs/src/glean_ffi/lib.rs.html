@@ -300,7 +300,7 @@
         <span class="kw">let</span> <span class="ident">data_dir</span> <span class="op">=</span> <span class="ident">data_dir</span>.<span class="ident">into_string</span>();
         <span class="kw">let</span> <span class="ident">application_id</span> <span class="op">=</span> <span class="ident">application_id</span>.<span class="ident">into_string</span>();
         <span class="kw">let</span> <span class="ident">glean</span> <span class="op">=</span> <span class="ident">Glean</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">data_dir</span>, <span class="kw-2">&amp;</span><span class="ident">application_id</span>)<span class="question-mark">?</span>;
-        <span class="ident">log</span>::<span class="macro">info</span><span class="macro">!</span>(<span class="string">&quot;Glean.rs initialized&quot;</span>);
+        <span class="ident">log</span>::<span class="macro">info</span><span class="macro">!</span>(<span class="string">&quot;Glean initialized&quot;</span>);
         <span class="prelude-val">Ok</span>(<span class="ident">glean</span>)
     })
 }
