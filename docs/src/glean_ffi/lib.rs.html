@@ -450,7 +450,7 @@
 }
 
 <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
-<span class="kw">pub</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">glean_counter_add</span>(<span class="ident">glean_handle</span>: <span class="ident">u64</span>, <span class="ident">metric_id</span>: <span class="ident">u64</span>, <span class="ident">amount</span>: <span class="ident">u64</span>) {
+<span class="kw">pub</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">glean_counter_add</span>(<span class="ident">glean_handle</span>: <span class="ident">u64</span>, <span class="ident">metric_id</span>: <span class="ident">u64</span>, <span class="ident">amount</span>: <span class="ident">i32</span>) {
     <span class="ident">GLEAN</span>.<span class="ident">call_infallible</span>(<span class="ident">glean_handle</span>, <span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
         <span class="ident">COUNTER_METRICS</span>.<span class="ident">call_infallible</span>(<span class="ident">metric_id</span>, <span class="op">|</span><span class="ident">metric</span><span class="op">|</span> {
             <span class="ident">metric</span>.<span class="ident">add</span>(<span class="ident">glean</span>, <span class="ident">amount</span>);
@@ -478,7 +478,7 @@
     <span class="ident">glean_handle</span>: <span class="ident">u64</span>,
     <span class="ident">metric_id</span>: <span class="ident">u64</span>,
     <span class="ident">storage_name</span>: <span class="ident">FfiStr</span>,
-) <span class="op">-&gt;</span> <span class="ident">u64</span> {
+) <span class="op">-&gt;</span> <span class="ident">i32</span> {
     <span class="ident">GLEAN</span>.<span class="ident">call_infallible</span>(<span class="ident">glean_handle</span>, <span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
         <span class="ident">COUNTER_METRICS</span>.<span class="ident">call_infallible</span>(<span class="ident">metric_id</span>, <span class="op">|</span><span class="ident">metric</span><span class="op">|</span> {
             <span class="ident">metric</span>.<span class="ident">test_get_value</span>(<span class="ident">glean</span>, <span class="ident">storage_name</span>.<span class="ident">as_str</span>()).<span class="ident">unwrap</span>()
