@@ -242,7 +242,7 @@
         <span class="ident">doc_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">data_path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>,
         <span class="ident">url_path</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">ping_content</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">ping_content</span>: <span class="kw-2">&amp;</span><span class="ident">JsonValue</span>,
     ) <span class="op">-&gt;</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">pings_dir</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_pings_dir</span>(<span class="ident">data_path</span>)<span class="question-mark">?</span>;
 
@@ -255,7 +255,7 @@
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">file</span> <span class="op">=</span> <span class="ident">File</span>::<span class="ident">create</span>(<span class="kw-2">&amp;</span><span class="ident">temp_ping_path</span>)<span class="question-mark">?</span>;
             <span class="ident">file</span>.<span class="ident">write_all</span>(<span class="ident">url_path</span>.<span class="ident">as_bytes</span>())<span class="question-mark">?</span>;
             <span class="ident">file</span>.<span class="ident">write_all</span>(<span class="string">b&quot;\n&quot;</span>)<span class="question-mark">?</span>;
-            <span class="ident">file</span>.<span class="ident">write_all</span>(<span class="ident">ping_content</span>.<span class="ident">as_bytes</span>())<span class="question-mark">?</span>;
+            <span class="ident">file</span>.<span class="ident">write_all</span>(::<span class="ident">serde_json</span>::<span class="ident">to_string</span>(<span class="ident">ping_content</span>)<span class="question-mark">?</span>.<span class="ident">as_bytes</span>())<span class="question-mark">?</span>;
         }
 
         <span class="ident">std</span>::<span class="ident">fs</span>::<span class="ident">rename</span>(<span class="ident">temp_ping_path</span>, <span class="ident">ping_path</span>)<span class="question-mark">?</span>;

@@ -115,6 +115,18 @@
 <span id="115">115</span>
 <span id="116">116</span>
 <span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Display</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
@@ -150,12 +162,16 @@
     <span class="ident">Handle</span>(<span class="ident">HandleError</span>),
 
     <span class="doccomment">/// IO error</span>
-    <span class="attribute">#[<span class="ident">fail</span>(<span class="ident">display</span> <span class="op">=</span> <span class="string">&quot;An I/O error occured.&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">fail</span>(<span class="ident">display</span> <span class="op">=</span> <span class="string">&quot;An I/O error occurred.&quot;</span>)]</span>
     <span class="ident">IoError</span>(<span class="ident">io</span>::<span class="ident">Error</span>),
 
     <span class="doccomment">/// IO error</span>
-    <span class="attribute">#[<span class="ident">fail</span>(<span class="ident">display</span> <span class="op">=</span> <span class="string">&quot;An Rkv error occured.&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">fail</span>(<span class="ident">display</span> <span class="op">=</span> <span class="string">&quot;An Rkv error occurred.&quot;</span>)]</span>
     <span class="ident">Rkv</span>(<span class="ident">StoreError</span>),
+
+    <span class="doccomment">/// JSON error</span>
+    <span class="attribute">#[<span class="ident">fail</span>(<span class="ident">display</span> <span class="op">=</span> <span class="string">&quot;A JSON error occurred.&quot;</span>)]</span>
+    <span class="ident">Json</span>(<span class="ident">serde_json</span>::<span class="ident">error</span>::<span class="ident">Error</span>),
 }
 
 <span class="doccomment">/// A specialized [`Error`] type for this crate&#39;s operations.</span>
@@ -231,6 +247,14 @@
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ExternError</span> {
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">error</span>: <span class="ident">Error</span>) <span class="op">-&gt;</span> <span class="ident">ExternError</span> {
         <span class="ident">ffi_support</span>::<span class="ident">ExternError</span>::<span class="ident">new_error</span>(<span class="ident">ffi_support</span>::<span class="ident">ErrorCode</span>::<span class="ident">new</span>(<span class="number">42</span>), <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">error</span>))
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">serde_json</span>::<span class="ident">error</span>::<span class="ident">Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">error</span>: <span class="ident">serde_json</span>::<span class="ident">error</span>::<span class="ident">Error</span>) <span class="op">-&gt;</span> <span class="ident">Error</span> {
+        <span class="ident">Error</span> {
+            <span class="ident">inner</span>: <span class="ident">Context</span>::<span class="ident">new</span>(<span class="ident">ErrorKind</span>::<span class="ident">Json</span>(<span class="ident">error</span>)),
+        }
     }
 }
 </pre></div>
