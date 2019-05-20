@@ -255,24 +255,6 @@
 <span id="255">255</span>
 <span id="256">256</span>
 <span id="257">257</span>
-<span id="258">258</span>
-<span id="259">259</span>
-<span id="260">260</span>
-<span id="261">261</span>
-<span id="262">262</span>
-<span id="263">263</span>
-<span id="264">264</span>
-<span id="265">265</span>
-<span id="266">266</span>
-<span id="267">267</span>
-<span id="268">268</span>
-<span id="269">269</span>
-<span id="270">270</span>
-<span id="271">271</span>
-<span id="272">272</span>
-<span id="273">273</span>
-<span id="274">274</span>
-<span id="275">275</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -371,11 +353,7 @@
 ) <span class="op">-&gt;</span> <span class="ident">u64</span> {
     <span class="ident">BOOLEAN_METRICS</span>.<span class="ident">insert_with_log</span>(<span class="op">||</span> {
         <span class="kw">let</span> <span class="ident">send_in_pings</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">from_raw_string_array</span>(<span class="ident">send_in_pings</span>, <span class="ident">send_in_pings_len</span>) };
-        <span class="kw">let</span> <span class="ident">lifetime</span> <span class="op">=</span> <span class="ident">Lifetime</span>::<span class="ident">try_from</span>(<span class="ident">lifetime</span>)
-            .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
-                <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;[Bool] Failed to convert from lifetime value {}&quot;</span>, <span class="ident">lifetime</span>);
-            })
-            .<span class="ident">unwrap_or</span>(<span class="ident">Lifetime</span>::<span class="ident">Ping</span>);
+        <span class="kw">let</span> <span class="ident">lifetime</span> <span class="op">=</span> <span class="ident">Lifetime</span>::<span class="ident">try_from</span>(<span class="ident">lifetime</span>)<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(<span class="ident">BooleanMetric</span>::<span class="ident">new</span>(<span class="ident">CommonMetricData</span> {
             <span class="ident">name</span>: <span class="ident">name</span>.<span class="ident">into_string</span>(),
@@ -398,14 +376,7 @@
 ) <span class="op">-&gt;</span> <span class="ident">u64</span> {
     <span class="ident">STRING_METRICS</span>.<span class="ident">insert_with_log</span>(<span class="op">||</span> {
         <span class="kw">let</span> <span class="ident">send_in_pings</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">from_raw_string_array</span>(<span class="ident">send_in_pings</span>, <span class="ident">send_in_pings_len</span>) };
-        <span class="kw">let</span> <span class="ident">lifetime</span> <span class="op">=</span> <span class="ident">Lifetime</span>::<span class="ident">try_from</span>(<span class="ident">lifetime</span>)
-            .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
-                <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(
-                    <span class="string">&quot;[String] Failed to convert from lifetime value {}&quot;</span>,
-                    <span class="ident">lifetime</span>
-                );
-            })
-            .<span class="ident">unwrap_or</span>(<span class="ident">Lifetime</span>::<span class="ident">Ping</span>);
+        <span class="kw">let</span> <span class="ident">lifetime</span> <span class="op">=</span> <span class="ident">Lifetime</span>::<span class="ident">try_from</span>(<span class="ident">lifetime</span>)<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(<span class="ident">StringMetric</span>::<span class="ident">new</span>(<span class="ident">CommonMetricData</span> {
             <span class="ident">name</span>: <span class="ident">name</span>.<span class="ident">into_string</span>(),
@@ -428,14 +399,7 @@
 ) <span class="op">-&gt;</span> <span class="ident">u64</span> {
     <span class="ident">COUNTER_METRICS</span>.<span class="ident">insert_with_log</span>(<span class="op">||</span> {
         <span class="kw">let</span> <span class="ident">send_in_pings</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">from_raw_string_array</span>(<span class="ident">send_in_pings</span>, <span class="ident">send_in_pings_len</span>) };
-        <span class="kw">let</span> <span class="ident">lifetime</span> <span class="op">=</span> <span class="ident">Lifetime</span>::<span class="ident">try_from</span>(<span class="ident">lifetime</span>)
-            .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
-                <span class="ident">log</span>::<span class="macro">error</span><span class="macro">!</span>(
-                    <span class="string">&quot;[Counter] Failed to convert from lifetime value {}&quot;</span>,
-                    <span class="ident">lifetime</span>
-                );
-            })
-            .<span class="ident">unwrap_or</span>(<span class="ident">Lifetime</span>::<span class="ident">Ping</span>);
+        <span class="kw">let</span> <span class="ident">lifetime</span> <span class="op">=</span> <span class="ident">Lifetime</span>::<span class="ident">try_from</span>(<span class="ident">lifetime</span>)<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(<span class="ident">CounterMetric</span>::<span class="ident">new</span>(<span class="ident">CommonMetricData</span> {
             <span class="ident">name</span>: <span class="ident">name</span>.<span class="ident">into_string</span>(),

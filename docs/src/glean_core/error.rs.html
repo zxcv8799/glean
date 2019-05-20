@@ -127,6 +127,10 @@
 <span id="127">127</span>
 <span id="128">128</span>
 <span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Display</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
@@ -157,6 +161,10 @@
 <span class="doccomment">/// [`Error`]: std.struct.Error.html</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Fail</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ErrorKind</span> {
+    <span class="doccomment">/// Lifetime conversion failed</span>
+    <span class="attribute">#[<span class="ident">fail</span>(<span class="ident">display</span> <span class="op">=</span> <span class="string">&quot;Lifetime conversion from {} failed&quot;</span>, <span class="ident">_0</span>)]</span>
+    <span class="ident">Lifetime</span>(<span class="ident">i32</span>),
+
     <span class="doccomment">/// FFI-Support error</span>
     <span class="attribute">#[<span class="ident">fail</span>(<span class="ident">display</span> <span class="op">=</span> <span class="string">&quot;Invalid handle&quot;</span>)]</span>
     <span class="ident">Handle</span>(<span class="ident">HandleError</span>),
