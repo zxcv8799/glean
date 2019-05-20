@@ -1,0 +1,357 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Adding a new metric type - Glean - Cross-platform Telemetry library</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">var path_to_root = "../../";</script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li><a href="../../index.html"><strong aria-hidden="true">1.</strong> Glean</a></li><li><a href="../../dev/index.html"><strong aria-hidden="true">2.</strong> Development</a></li><li><ol class="section"><li><a href="../../dev/android/index.html"><strong aria-hidden="true">2.1.</strong> Android</a></li><li><ol class="section"><li><a href="../../dev/android/setup-android-build-environment.html"><strong aria-hidden="true">2.1.1.</strong> Setup Build Environment</a></li></ol></li><li><a href="../../dev/core/index.html"><strong aria-hidden="true">2.2.</strong> Rust Component</a></li><li><ol class="section"><li><a href="../../dev/core/dependency-management.html"><strong aria-hidden="true">2.2.1.</strong> Dependency Management</a></li><li><a href="../../dev/core/new-metric-type.html" class="active"><strong aria-hidden="true">2.2.2.</strong> Adding a new metric type</a></li></ol></li><li><a href="../../dev/ffi/index.html"><strong aria-hidden="true">2.3.</strong> FFI Layer</a></li><li><ol class="section"><li><a href="../../dev/ffi/when-to-use-what-in-the-ffi.html"><strong aria-hidden="true">2.3.1.</strong> When/How FFI</a></li></ol></li><li><a href="../../contributing.html"><strong aria-hidden="true">2.4.</strong> Contributing</a></li></ol></li><li><a href="../../user/index.html"><strong aria-hidden="true">3.</strong> User</a></li><li><ol class="section"><li><a href="../../user/adding-new-metrics.html"><strong aria-hidden="true">3.1.</strong> Adding new metrics</a></li><li><a href="../../user/testing-metrics.html"><strong aria-hidden="true">3.2.</strong> Testing metrics</a></li><li><a href="../../user/metrics/index.html"><strong aria-hidden="true">3.3.</strong> Metrics types</a></li><li><ol class="section"><li><a href="../../user/metrics/boolean.html"><strong aria-hidden="true">3.3.1.</strong> Boolean</a></li><li><a href="../../user/metrics/counter.html"><strong aria-hidden="true">3.3.2.</strong> Counter</a></li><li><a href="../../user/metrics/string.html"><strong aria-hidden="true">3.3.3.</strong> String</a></li><li><a href="../../user/metrics/string_list.html"><strong aria-hidden="true">3.3.4.</strong> String List</a></li><li><a href="../../user/metrics/timespan.html"><strong aria-hidden="true">3.3.5.</strong> Timespan</a></li><li><a href="../../user/metrics/timing_distribution.html"><strong aria-hidden="true">3.3.6.</strong> Timing Distribution</a></li><li><a href="../../user/metrics/uuid.html"><strong aria-hidden="true">3.3.7.</strong> UUID</a></li><li><a href="../../user/metrics/datetime.html"><strong aria-hidden="true">3.3.8.</strong> Datetime</a></li><li><a href="../../user/metrics/event.html"><strong aria-hidden="true">3.3.9.</strong> Event</a></li><li><a href="../../user/metrics/labeled_metric.html"><strong aria-hidden="true">3.3.10.</strong> Labeled Metrics</a></li></ol></li><li><a href="../../user/pings/index.html"><strong aria-hidden="true">3.4.</strong> Pings</a></li><li><ol class="section"><li><a href="../../user/pings/baseline.html"><strong aria-hidden="true">3.4.1.</strong> Baseline Ping</a></li></ol></li></ol></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Glean - Cross-platform Telemetry library</h1> 
+
+                        <div class="right-buttons">
+                            <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#adding-a-new-metric-type" id="adding-a-new-metric-type"><h1>Adding a new metric type</h1></a>
+<p>Data in Glean is stored in so-called metrics.
+You can find the full list of implemented metric types <a href="/user/metrics/index.html">in the user overview</a>.</p>
+<p>Adding a new metric type involves defining the metric type's API, its persisted and in-memory storage as well as its serialization into the ping payload.</p>
+<a class="header" href="#the-metric-types-api" id="the-metric-types-api"><h2>The metric type's API</h2></a>
+<p>A metric type implementation is defined in its own file under <code>glean-core/src/metrics/</code>, e.g. <code>glean-core/src/metrics/counter.rs</code> for a <a href="/user/metrics/counter.html">Counter</a>.</p>
+<p>Start by defining a structure to hold the metric's metadata:</p>
+<pre><code class="language-rust noplaypen">#[derive(Debug)]
+pub struct CounterMetric {
+    meta: CommonMetricData
+}
+</code></pre>
+<p>Its implementation should have a way to create a new metric from the common metric data. It should be the same for all metric types.</p>
+<pre><code class="language-rust noplaypen">impl CounterMetric {
+    pub fn new(meta: CommonMetricData) -&gt; Self {
+        Self { meta }
+    }
+}
+</code></pre>
+<p>Implement each method. The first argument to accept should always be <code>glean: &amp;Glean</code>, that is: a reference to the Glean object, used to access the storage:</p>
+<pre><code class="language-rust noplaypen">impl CounterMetric { // same block as above
+    pub fn add(&amp;self, glean: &amp;Glean, amount: i32) {
+        // Always include this check!
+        if !self.meta.should_record() || !glean.is_upload_enabled() {
+            return;
+        }
+
+        // Do error handling here
+
+        glean
+            .storage()
+            .record_with(&amp;self.meta, |old_value| match old_value {
+                Some(Metric::Counter(old_value)) =&gt; Metric::Counter(old_value + amount),
+                _ =&gt; Metric::Counter(amount),
+            })
+    }
+}
+</code></pre>
+<p>Use <code>glean.storage().record()</code> to record a fixed value or <code>glean.storage.record_with()</code> to construct a new value from the currently stored one.</p>
+<p>The storage operation makes use of the metric's variant of the <code>Metric</code> enumeration.</p>
+<a class="header" href="#the-metric-enumeration" id="the-metric-enumeration"><h2>The <code>Metric</code> enumeration</h2></a>
+<p>Persistence and in-memory serialization as well as ping payload serialization are handled through the <code>Metric</code> enumeration.
+This is defined in <code>glean-core/src/metrics/mod.rs</code>.
+Variants of this enumeration are used in the storage implementation of the metric type.</p>
+<p>To add a new metric type, add a new variant to the <code>Metric</code> enum:</p>
+<pre><code class="language-rust noplaypen">#[derive(Serialize, Deserialize, Debug, Clone)]
+pub enum Metric {
+    // ...
+    Counter(i32),
+}
+</code></pre>
+<p>Then modify the below implementation and define the right category name for the new type. This will be used in the ping payload:</p>
+<pre><code class="language-rust noplaypen">impl Metric {
+    pub fn category(&amp;self) -&gt; &amp;'static str {
+        match self {
+            // ...
+            Metric::Counter(_) =&gt; &quot;counter&quot;,
+        }
+    }
+}
+</code></pre>
+<p>Finally, define the ping payload serialization (as JSON).
+In the simple cases where the in-memory representation maps to its JSON representation it is enough to call the <code>json!</code> macro.</p>
+<pre><code class="language-rust noplaypen">impl Metric { // same block as above
+    pub fn as_json(&amp;self) -&gt; JsonValue {
+        match self {
+            // ...
+            Metric::Counter(c) =&gt; json!(c),
+        }
+    }
+}
+</code></pre>
+<p>For more complex serialization consider implementing serialization logic as a function returning a <a href="https://docs.rs/serde_json/*/serde_json/enum.Value.html"><code>serde_json::Value</code></a>
+or another object that can be serialized.</p>
+<a class="header" href="#ffi-layer" id="ffi-layer"><h2>FFI layer</h2></a>
+<p>In order to use a new metric type over the FFI layer, it needs implementations in the FFI component and the platform-part.</p>
+<a class="header" href="#ffi-component" id="ffi-component"><h3>FFI component</h3></a>
+<p>The FFI component implementation can be found in <code>glean-core/ffi/src/lib.rs</code>.</p>
+<p>Add a global map for your metric type:</p>
+<pre><code class="language-rust noplaypen">lazy_static! {
+    static ref COUNTER_METRICS: ConcurrentHandleMap&lt;CounterMetric&gt; = ConcurrentHandleMap::new();
+}
+</code></pre>
+<p>Add a function to create new instances of this metric type:</p>
+<pre><code class="language-rust noplaypen">#[no_mangle]
+pub extern &quot;C&quot; fn glean_new_counter_metric(
+    category: FfiStr,
+    name: FfiStr,
+    send_in_pings: RawStringArray,
+    send_in_pings_len: i32,
+    lifetime: i32,
+    disabled: u8,
+) -&gt; u64 {
+    COUNTER_METRICS.insert_with_log(|| {
+        let send_in_pings = unsafe { from_raw_string_array(send_in_pings, send_in_pings_len) };
+        let lifetime = Lifetime::try_from(lifetime)?;
+
+        Ok(CounterMetric::new(CommonMetricData {
+            name: name.into_string(),
+            category: category.into_string(),
+            send_in_pings,
+            lifetime,
+            disabled: disabled != 0,
+        }))
+    })
+}
+</code></pre>
+<p>On the Rust side add wrappers around the metric type's storage functions:</p>
+<pre><code class="language-rust noplaypen">#[no_mangle]
+pub extern &quot;C&quot; fn glean_counter_add(glean_handle: u64, metric_id: u64, amount: i32) {
+    GLEAN.call_infallible(glean_handle, |glean| {
+        COUNTER_METRICS.call_infallible(metric_id, |metric| {
+            metric.add(glean, amount);
+        })
+    })
+}
+</code></pre>
+<a class="header" href="#platform-part-kotlin" id="platform-part-kotlin"><h3>Platform-part (Kotlin)</h3></a>
+<p>The platform-specific FFI wrapper needs the definitions of these new functions.
+For Kotlin this is in <code>glean-core/android/src/main/java/mozilla/telemetry/glean/rust/LibGleanFFI.kt</code>:</p>
+<pre><code class="language-kotlin">fun glean_new_counter_metric(category: String, name: String, send_in_pings: StringArray, send_in_pings_len: Int, lifetime: Int, disabled: Byte): Long
+fun glean_counter_add(glean_handle: Long, metric_id: Long, amount: Int)
+</code></pre>
+<p>Finally, create a platform-specific metric type wrapper.
+For Kotlin this would be <code>glean-core/android/src/main/java/mozilla/telemetry/glean/private/CounterMetricType.kt</code>:</p>
+<pre><code class="language-kotlin">class CounterMetricType(
+    disabled: Boolean,
+    category: String,
+    lifetime: Lifetime,
+    name: String,
+    val sendInPings: List&lt;String&gt;
+) {
+    private var handle: Long
+
+    init {
+        println(&quot;New Counter: $category.$name&quot;)
+
+        val ffiPingsList = StringArray(sendInPings.toTypedArray(), &quot;utf-8&quot;)
+        this.handle = LibGleanFFI.INSTANCE.glean_new_counter_metric(
+                category = category,
+                name = name,
+                send_in_pings = ffiPingsList,
+                send_in_pings_len = sendInPings.size,
+                lifetime = lifetime.ordinal,
+                disabled = disabled.toByte())
+    }
+
+    fun add(amount: Int = 1) {
+        @Suppress(&quot;EXPERIMENTAL_API_USAGE&quot;)
+        Dispatchers.API.launch {
+            LibGleanFFI.INSTANCE.glean_counter_add(
+                Glean.handle,
+                this@CounterMetricType.handle,
+                amount)
+        }
+    }
+}
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../dev/core/dependency-management.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../dev/ffi/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../../dev/core/dependency-management.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../../dev/ffi/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
