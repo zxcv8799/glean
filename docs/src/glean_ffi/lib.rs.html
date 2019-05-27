@@ -322,7 +322,6 @@
 <span id="322">322</span>
 <span id="323">323</span>
 <span id="324">324</span>
-<span id="325">325</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -368,7 +367,8 @@
 
 <span class="doccomment">/// Initialize the logging system based on the target platform. This ensures</span>
 <span class="doccomment">/// that logging is shown when executing glean unit tests.</span>
-<span class="kw">fn</span> <span class="ident">initialize_logging</span>() {
+<span class="attribute">#[<span class="ident">no_mangle</span>]</span>
+<span class="kw">pub</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">glean_enable_logging</span>() {
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>)]</span>
     {
         <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">std</span>::<span class="ident">panic</span>::<span class="ident">catch_unwind</span>(<span class="op">||</span> {
@@ -396,8 +396,6 @@
 
 <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
 <span class="kw">pub</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">glean_initialize</span>(<span class="ident">data_dir</span>: <span class="ident">FfiStr</span>, <span class="ident">application_id</span>: <span class="ident">FfiStr</span>) <span class="op">-&gt;</span> <span class="ident">u64</span> {
-    <span class="ident">initialize_logging</span>();
-
     <span class="ident">GLEAN</span>.<span class="ident">insert_with_log</span>(<span class="op">||</span> {
         <span class="kw">let</span> <span class="ident">data_dir</span> <span class="op">=</span> <span class="ident">data_dir</span>.<span class="ident">into_string</span>();
         <span class="kw">let</span> <span class="ident">application_id</span> <span class="op">=</span> <span class="ident">application_id</span>.<span class="ident">into_string</span>();
