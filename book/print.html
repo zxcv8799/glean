@@ -339,8 +339,15 @@ This also gives you a <code>should_record</code> method on the metric type.</p>
 <p>Persistence and in-memory serialization as well as ping payload serialization are handled through the <code>Metric</code> enumeration.
 This is defined in <code>glean-core/src/metrics/mod.rs</code>.
 Variants of this enumeration are used in the storage implementation of the metric type.</p>
-<p>To add a new metric type, add a new variant to the <code>Metric</code> enum:</p>
-<pre><code class="language-rust noplaypen">#[derive(Serialize, Deserialize, Debug, Clone)]
+<p>To add a new metric type, include the metric module and declare its use, then add a new variant to the <code>Metric</code> enum:</p>
+<pre><code class="language-rust noplaypen">
+mod counter;
+
+// ...
+
+pub use self::counter::CounterMetric;
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum Metric {
     // ...
     Counter(i32),
