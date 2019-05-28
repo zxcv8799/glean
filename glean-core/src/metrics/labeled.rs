@@ -8,6 +8,7 @@ use std::marker::PhantomData;
 use lazy_static::lazy_static;
 use regex::Regex;
 
+use crate::error_recording::{record_error, ErrorType};
 use crate::metrics::MetricType;
 use crate::CommonMetricData;
 use crate::Glean;
@@ -67,7 +68,7 @@ where
         }
     }
 
-    fn dynamic_label<'a>(&mut self, label: &'a str) -> &'a str {
+    fn dynamic_label<'a>(&mut self, glean: &Glean, label: &'a str) -> &'a str {
         // TODO(bug 1554970): Fetch seen_labels from the database if empty
 
         if !self.seen_labels.contains(label) {
@@ -75,16 +76,18 @@ where
                 return OTHER_LABEL;
             } else {
                 if label.len() > MAX_LABEL_LENGTH {
-                    log::error!(
+                    let msg = format!(
                         "label length {} exceeds maximum of {}",
                         label.len(),
                         MAX_LABEL_LENGTH
                     );
+                    record_error(glean, &self.meta, ErrorType::InvalidLabel, msg);
                     return OTHER_LABEL;
                 }
 
                 if !LABEL_REGEX.is_match(label) {
-                    log::error!("label must be snake_case, got '{}'", label,);
+                    let msg = format!("label must be snake_case, got '{}'", label);
+                    record_error(glean, &self.meta, ErrorType::InvalidLabel, msg);
                     return OTHER_LABEL;
                 }
 
@@ -106,10 +109,10 @@ where
     ///
     /// Labels must be `snake_case` and less than 30 characters.
     /// If an invalid label is used, the metric will be recorded in the special `OTHER_LABEL` label.
-    pub fn get(&mut self, _glean: &Glean, label: &str) -> T {
+    pub fn get(&mut self, glean: &Glean, label: &str) -> T {
         let label = match self.labels {
             Some(_) => self.static_label(label),
-            None => self.dynamic_label(label),
+            None => self.dynamic_label(glean, label),
         };
         let label = format!("{}/{}", self.meta.name, label);
 
