@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["Metric",""]],"struct":[["BooleanMetric",""],["CounterMetric",""],["StringListMetric",""],["StringMetric",""],["UuidMetric",""]],"trait":[["MetricType",""]]});
+initSidebarItems({"enum":[["Metric",""]],"struct":[["BooleanMetric",""],["CounterMetric",""],["PingType","Stores information about a ping. This is required so that given metric data queued on disk we can send pings with the correct settings, e.g. whether it has a client_id."],["StringListMetric",""],["StringMetric",""],["UuidMetric",""]],"trait":[["MetricType",""]]});
