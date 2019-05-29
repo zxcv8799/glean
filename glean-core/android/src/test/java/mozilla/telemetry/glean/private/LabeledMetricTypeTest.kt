@@ -10,6 +10,7 @@ import android.content.SharedPreferences
 import androidx.test.core.app.ApplicationProvider
 */
 import mozilla.telemetry.glean.resetGlean
+import mozilla.telemetry.glean.error.ErrorRecording
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -212,13 +213,14 @@ class LabeledMetricTypeTest {
         labeledCounterMetric["with/slash"].add(1)
         labeledCounterMetric["this_string_has_more_than_thirty_characters"].add(1)
 
-        /*assertEquals(*/
-            /*4,*/
-            /*ErrorRecording.testGetNumRecordedErrors(*/
-                /*labeledCounterMetric,*/
-                /*ErrorRecording.ErrorType.InvalidValue*/
-            /*)*/
-        /*)*/
+        assertEquals(
+            4,
+            ErrorRecording.testGetNumRecordedErrors(
+                "telemetry.labeled_counter_metric",
+                ErrorRecording.ErrorType.InvalidLabel,
+                "metrics"
+            )
+        )
         assertEquals(
             4,
             labeledCounterMetric["__other__"].testGetValue()
