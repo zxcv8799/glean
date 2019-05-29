@@ -363,6 +363,9 @@
 <span id="363">363</span>
 <span id="364">364</span>
 <span id="365">365</span>
+<span id="366">366</span>
+<span id="367">367</span>
+<span id="368">368</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public</span>
 <span class="comment">// License, v. 2.0. If a copy of the MPL was not distributed with this</span>
@@ -381,7 +384,10 @@
 <span class="kw">use</span> <span class="ident">glean_core</span>::{<span class="ident">metrics</span>::<span class="kw-2">*</span>, <span class="ident">CommonMetricData</span>, <span class="ident">Glean</span>, <span class="ident">Lifetime</span>};
 
 <span class="kw">mod</span> <span class="ident">handlemap_ext</span>;
+<span class="kw">mod</span> <span class="ident">labeled</span>;
+
 <span class="kw">use</span> <span class="ident">handlemap_ext</span>::<span class="ident">HandleMapExtension</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">labeled</span>::<span class="kw-2">*</span>;
 
 <span class="macro">lazy_static</span><span class="macro">!</span> {
     <span class="kw">static</span> <span class="kw-2">ref</span> <span class="ident">GLEAN</span>: <span class="ident">ConcurrentHandleMap</span><span class="op">&lt;</span><span class="ident">Glean</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">ConcurrentHandleMap</span>::<span class="ident">new</span>();
