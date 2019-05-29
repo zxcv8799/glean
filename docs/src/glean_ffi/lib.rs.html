@@ -715,17 +715,17 @@
 }
 
 <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
-<span class="kw">pub</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">glean_ping_collect</span>(<span class="ident">glean_handle</span>: <span class="ident">u64</span>, <span class="ident">ping_name</span>: <span class="ident">FfiStr</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_char</span> {
+<span class="kw">pub</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">glean_ping_collect</span>(<span class="ident">glean_handle</span>: <span class="ident">u64</span>, <span class="ident">ping_type_handle</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_char</span> {
     <span class="ident">GLEAN</span>.<span class="ident">call_infallible</span>(<span class="ident">glean_handle</span>, <span class="op">|</span><span class="ident">glean</span><span class="op">|</span> {
-        <span class="kw">let</span> <span class="ident">ping_maker</span> <span class="op">=</span> <span class="ident">glean_core</span>::<span class="ident">ping</span>::<span class="ident">PingMaker</span>::<span class="ident">new</span>();
-        <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">ping_maker</span>
-            .<span class="ident">collect_string</span>(
-                <span class="ident">glean</span>.<span class="ident">storage</span>(),
-                <span class="ident">glean</span>.<span class="ident">get_ping_by_name</span>(<span class="ident">ping_name</span>.<span class="ident">as_str</span>()).<span class="ident">unwrap</span>(),
-            )
-            .<span class="ident">unwrap_or_else</span>(<span class="op">||</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;&quot;</span>));
-        <span class="ident">log</span>::<span class="macro">info</span><span class="macro">!</span>(<span class="string">&quot;Ping({}): {}&quot;</span>, <span class="ident">ping_name</span>.<span class="ident">as_str</span>(), <span class="ident">data</span>);
-        <span class="ident">data</span>
+        <span class="kw">let</span> <span class="ident">res</span>: <span class="ident">glean_core</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">PING_TYPES</span>.<span class="ident">get_u64</span>(<span class="ident">ping_type_handle</span>, <span class="op">|</span><span class="ident">ping_type</span><span class="op">|</span> {
+            <span class="kw">let</span> <span class="ident">ping_maker</span> <span class="op">=</span> <span class="ident">glean_core</span>::<span class="ident">ping</span>::<span class="ident">PingMaker</span>::<span class="ident">new</span>();
+            <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">ping_maker</span>
+                .<span class="ident">collect_string</span>(<span class="ident">glean</span>.<span class="ident">storage</span>(), <span class="ident">ping_type</span>)
+                .<span class="ident">unwrap_or_else</span>(<span class="op">||</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;&quot;</span>));
+            <span class="ident">log</span>::<span class="macro">info</span><span class="macro">!</span>(<span class="string">&quot;Ping({}): {}&quot;</span>, <span class="ident">ping_type</span>.<span class="ident">name</span>.<span class="ident">as_str</span>(), <span class="ident">data</span>);
+            <span class="prelude-val">Ok</span>(<span class="ident">data</span>)
+        });
+        <span class="ident">res</span>.<span class="ident">unwrap</span>()
     })
 }
 
