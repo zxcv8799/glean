@@ -1,0 +1,26 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>GleanInternalAPI.initialize - project</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">project</a>&nbsp;/&nbsp;<a href="../index.html">mozilla.telemetry.glean</a>&nbsp;/&nbsp;<a href="index.html">GleanInternalAPI</a>&nbsp;/&nbsp;<a href="./initialize.html">initialize</a><br/>
+<br/>
+<h1>initialize</h1>
+<a name="mozilla.telemetry.glean.GleanInternalAPI$initialize(android.content.Context, mozilla.telemetry.glean.config.Configuration)"></a>
+<code><span class="identifier">@Synchronized</span> <span class="keyword">fun </span><span class="identifier">initialize</span><span class="symbol">(</span><span class="identifier" id="mozilla.telemetry.glean.GleanInternalAPI$initialize(android.content.Context, mozilla.telemetry.glean.config.Configuration)/applicationContext">applicationContext</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">, </span><span class="identifier" id="mozilla.telemetry.glean.GleanInternalAPI$initialize(android.content.Context, mozilla.telemetry.glean.config.Configuration)/configuration">configuration</span><span class="symbol">:</span>&nbsp;<a href="../../mozilla.telemetry.glean.config/-configuration/index.html"><span class="identifier">Configuration</span></a>&nbsp;<span class="symbol">=</span>&nbsp;Configuration()<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Initialize Glean.</p>
+<p>This should only be initialized once by the application, and not by
+libraries using Glean. A message is logged to error and no changes are made
+to the state if initialize is called a more than once.</p>
+<p>A LifecycleObserver will be added to send pings when the application goes
+into the background.</p>
+<h3>Parameters</h3>
+<p><a name="applicationContext"></a>
+<code>applicationContext</code> - <a href="https://developer.android.com/reference/android/content/Context.html">Context</a> to access application features, such
+as shared preferences</p>
+<p><a name="configuration"></a>
+<code>configuration</code> - A Glean <a href="../../mozilla.telemetry.glean.config/-configuration/index.html">Configuration</a> object with global settings.</p>
+</BODY>
+</HTML>

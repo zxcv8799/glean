@@ -1,0 +1,175 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>mozilla.telemetry.glean.private - project</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">project</a>&nbsp;/&nbsp;<a href="./index.html">mozilla.telemetry.glean.private</a><br/>
+<br/>
+<h2>Package mozilla.telemetry.glean.private</h2>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-boolean-metric-type/index.html">BooleanMetricType</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">BooleanMetricType</span></code>
+<p>This implements the developer facing API for recording boolean metrics.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-counter-metric-type/index.html">CounterMetricType</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">CounterMetricType</span></code>
+<p>This implements the developer facing API for recording counter metrics.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-datetime-metric-type/index.html">DatetimeMetricType</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">DatetimeMetricType</span></code>
+<p>This implements the developer facing API for recording datetime metrics.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-event-metric-type/index.html">EventMetricType</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">EventMetricType</span><span class="symbol">&lt;</span><span class="identifier">ExtraKeysEnum</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/index.html"><span class="identifier">Enum</span></a><span class="symbol">&lt;</span><a href="-event-metric-type/index.html#ExtraKeysEnum"><span class="identifier">ExtraKeysEnum</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code>
+<p>This implements the developer facing API for recording events.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-histogram-type/index.html">HistogramType</a></p>
+</td>
+<td>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">HistogramType</span></code>
+<p>Enumeration of the different kinds of histograms supported by metrics based on histograms.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-labeled-metric-type/index.html">LabeledMetricType</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">LabeledMetricType</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span></code>
+<p>This implements the developer facing API for labeled metrics.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-lifetime/index.html">Lifetime</a></p>
+</td>
+<td>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">Lifetime</span></code>
+<p>Enumeration of different metric lifetimes.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-no-extra-keys/index.html">NoExtraKeys</a></p>
+</td>
+<td>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">NoExtraKeys</span></code>
+<p>An enum with no values for convenient use as the default set of extra keys
+that an <a href="-event-metric-type/index.html">EventMetricType</a> can accept.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-ping-type/index.html">PingType</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">PingType</span></code>
+<p>This implements the developer facing API for custom pings.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-recorded-event-data/index.html">RecordedEventData</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">RecordedEventData</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-recorded-experiment-data/index.html">RecordedExperimentData</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">RecordedExperimentData</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-string-list-metric-type/index.html">StringListMetricType</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">StringListMetricType</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-string-metric-type/index.html">StringMetricType</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">StringMetricType</span></code>
+<p>This implements the developer facing API for recording string metrics.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-time-unit/index.html">TimeUnit</a></p>
+</td>
+<td>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">TimeUnit</span></code>
+<p>Enumeration of different resolutions supported by
+the Timespan and TimingDistribution metric types.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-timespan-metric-type/index.html">TimespanMetricType</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">TimespanMetricType</span></code>
+<p>This implements the developer facing API for recording timespans.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-timing-distribution-data/index.html">TimingDistributionData</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">TimingDistributionData</span></code>
+<p>This class represents the structure of a timing distribution according to the pipeline schema. It
+is meant to help serialize and deserialize data to the correct format for transport and storage,
+as well as including a helper function to calculate the bucket sizes.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-timing-distribution-metric-type/index.html">TimingDistributionMetricType</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">TimingDistributionMetricType</span></code>
+<p>This implements the developer facing API for recording timing distribution metrics.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-uuid-metric-type/index.html">UuidMetricType</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">UuidMetricType</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

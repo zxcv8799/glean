@@ -1,0 +1,172 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Configuration - project</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">project</a>&nbsp;/&nbsp;<a href="../index.html">mozilla.telemetry.glean.config</a>&nbsp;/&nbsp;<a href="./index.html">Configuration</a><br/>
+<br/>
+<h1>Configuration</h1>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Configuration</span></code>
+<p>The Configuration class describes how to configure Glean.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">Configuration</span><span class="symbol">(</span><span class="identifier" id="mozilla.telemetry.glean.config.Configuration$<init>(kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Lazy((mozilla.components.concept.fetch.Client)), kotlin.String)/connectionTimeout">connectionTimeout</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a>&nbsp;<span class="symbol">=</span>&nbsp;DEFAULT_CONNECTION_TIMEOUT<span class="symbol">, </span><span class="identifier" id="mozilla.telemetry.glean.config.Configuration$<init>(kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Lazy((mozilla.components.concept.fetch.Client)), kotlin.String)/readTimeout">readTimeout</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a>&nbsp;<span class="symbol">=</span>&nbsp;DEFAULT_READ_TIMEOUT<span class="symbol">, </span><span class="identifier" id="mozilla.telemetry.glean.config.Configuration$<init>(kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Lazy((mozilla.components.concept.fetch.Client)), kotlin.String)/maxEvents">maxEvents</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;DEFAULT_MAX_EVENTS<span class="symbol">, </span><span class="identifier" id="mozilla.telemetry.glean.config.Configuration$<init>(kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Lazy((mozilla.components.concept.fetch.Client)), kotlin.String)/httpClient">httpClient</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-lazy/index.html"><span class="identifier">Lazy</span></a><span class="symbol">&lt;</span><span class="identifier">Client</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">=</span>&nbsp;lazy { HttpURLConnectionClient() }<span class="symbol">, </span><span class="identifier" id="mozilla.telemetry.glean.config.Configuration$<init>(kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Lazy((mozilla.components.concept.fetch.Client)), kotlin.String)/channel">channel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="channel.html">channel</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">channel</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code>
+<p>the release channel the application is on, if known. This will be
+    sent along with all the pings, in the <code>client_info</code> section.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="connection-timeout.html">connectionTimeout</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">connectionTimeout</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>the timeout, in milliseconds, to use when connecting to
+    the <a href="server-endpoint.html">serverEndpoint</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="http-client.html">httpClient</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">httpClient</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-lazy/index.html"><span class="identifier">Lazy</span></a><span class="symbol">&lt;</span><span class="identifier">Client</span><span class="symbol">&gt;</span></code>
+<p>The HTTP client implementation to use for uploading pings.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="log-pings.html">logPings</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">logPings</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>whether to log ping contents to the console. This is only meant to be used
+    internally by the <code>GleanDebugActivity</code>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="max-events.html">maxEvents</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">maxEvents</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>the number of events to store before the events ping is sent</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="ping-tag.html">pingTag</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pingTag</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code>
+<p>String tag to be applied to headers when uploading pings for debug view.
+    This is only meant to be used internally by the <code>GleanDebugActivity</code>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="read-timeout.html">readTimeout</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">readTimeout</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>the timeout, in milliseconds, to use when connecting to
+    the <a href="server-endpoint.html">serverEndpoint</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="server-endpoint.html">serverEndpoint</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">serverEndpoint</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>the server pings are sent to. Please note that this is
+    is only meant to be changed for tests.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="user-agent.html">userAgent</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">userAgent</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>the user agent used when sending pings, only to be used internally.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-d-e-f-a-u-l-t_-c-o-n-n-e-c-t-i-o-n_-t-i-m-e-o-u-t.html">DEFAULT_CONNECTION_TIMEOUT</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">DEFAULT_CONNECTION_TIMEOUT</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-d-e-f-a-u-l-t_-d-e-b-u-g-v-i-e-w_-e-n-d-p-o-i-n-t.html">DEFAULT_DEBUGVIEW_ENDPOINT</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">DEFAULT_DEBUGVIEW_ENDPOINT</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-d-e-f-a-u-l-t_-l-o-g_-p-i-n-g-s.html">DEFAULT_LOG_PINGS</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">DEFAULT_LOG_PINGS</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-d-e-f-a-u-l-t_-m-a-x_-e-v-e-n-t-s.html">DEFAULT_MAX_EVENTS</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">DEFAULT_MAX_EVENTS</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-d-e-f-a-u-l-t_-r-e-a-d_-t-i-m-e-o-u-t.html">DEFAULT_READ_TIMEOUT</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">DEFAULT_READ_TIMEOUT</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-d-e-f-a-u-l-t_-t-e-l-e-m-e-t-r-y_-e-n-d-p-o-i-n-t.html">DEFAULT_TELEMETRY_ENDPOINT</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">DEFAULT_TELEMETRY_ENDPOINT</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-d-e-f-a-u-l-t_-u-s-e-r_-a-g-e-n-t.html">DEFAULT_USER_AGENT</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">DEFAULT_USER_AGENT</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

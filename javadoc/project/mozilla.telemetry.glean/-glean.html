@@ -1,0 +1,110 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Glean - project</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">project</a>&nbsp;/&nbsp;<a href="index.html">mozilla.telemetry.glean</a>&nbsp;/&nbsp;<a href="./-glean.html">Glean</a><br/>
+<br/>
+<h1>Glean</h1>
+<code><span class="keyword">object </span><span class="identifier">Glean</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-glean-internal-a-p-i/index.html"><span class="identifier">GleanInternalAPI</span></a></code>
+<h3>Inherited Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-glean-internal-a-p-i/enable-testing-mode.html">enableTestingMode</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">enableTestingMode</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Should be called from all users of the Glean testing API.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-glean-internal-a-p-i/get-upload-enabled.html">getUploadEnabled</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getUploadEnabled</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Get whether or not Glean is allowed to record and upload data.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-glean-internal-a-p-i/handle-background-event.html">handleBackgroundEvent</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">handleBackgroundEvent</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Handle the background event and send the appropriate pings.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-glean-internal-a-p-i/initialize.html">initialize</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">initialize</span><span class="symbol">(</span><span class="identifier" id="mozilla.telemetry.glean.GleanInternalAPI$initialize(android.content.Context, mozilla.telemetry.glean.config.Configuration)/applicationContext">applicationContext</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">, </span><span class="identifier" id="mozilla.telemetry.glean.GleanInternalAPI$initialize(android.content.Context, mozilla.telemetry.glean.config.Configuration)/configuration">configuration</span><span class="symbol">:</span>&nbsp;<a href="../mozilla.telemetry.glean.config/-configuration/index.html"><span class="identifier">Configuration</span></a>&nbsp;<span class="symbol">=</span>&nbsp;Configuration()<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Initialize Glean.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-glean-internal-a-p-i/register-pings.html">registerPings</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">registerPings</span><span class="symbol">(</span><span class="identifier" id="mozilla.telemetry.glean.GleanInternalAPI$registerPings(kotlin.Any)/pings">pings</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Register the pings generated from <code>pings.yaml</code> with Glean.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-glean-internal-a-p-i/set-experiment-active.html">setExperimentActive</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setExperimentActive</span><span class="symbol">(</span><span class="identifier" id="mozilla.telemetry.glean.GleanInternalAPI$setExperimentActive(kotlin.String, kotlin.String, kotlin.collections.Map((kotlin.String, )))/experimentId">experimentId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="mozilla.telemetry.glean.GleanInternalAPI$setExperimentActive(kotlin.String, kotlin.String, kotlin.collections.Map((kotlin.String, )))/branch">branch</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="mozilla.telemetry.glean.GleanInternalAPI$setExperimentActive(kotlin.String, kotlin.String, kotlin.collections.Map((kotlin.String, )))/extra">extra</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/index.html"><span class="identifier">Map</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Indicate that an experiment is running. Glean will then add an
+experiment annotation to the environment which is sent with pings. This
+information is not persisted between runs.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-glean-internal-a-p-i/set-experiment-inactive.html">setExperimentInactive</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setExperimentInactive</span><span class="symbol">(</span><span class="identifier" id="mozilla.telemetry.glean.GleanInternalAPI$setExperimentInactive(kotlin.String)/experimentId">experimentId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Indicate that an experiment is no longer running.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-glean-internal-a-p-i/set-upload-enabled.html">setUploadEnabled</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setUploadEnabled</span><span class="symbol">(</span><span class="identifier" id="mozilla.telemetry.glean.GleanInternalAPI$setUploadEnabled(kotlin.Boolean)/enabled">enabled</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Enable or disable Glean collection and upload.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-glean-internal-a-p-i/test-get-experiment-data.html">testGetExperimentData</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">testGetExperimentData</span><span class="symbol">(</span><span class="identifier" id="mozilla.telemetry.glean.GleanInternalAPI$testGetExperimentData(kotlin.String)/experimentId">experimentId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../mozilla.telemetry.glean.private/-recorded-experiment-data/index.html"><span class="identifier">RecordedExperimentData</span></a></code>
+<p>Returns the stored data for the requested active experiment, for testing purposes only.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-glean-internal-a-p-i/test-is-experiment-active.html">testIsExperimentActive</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">testIsExperimentActive</span><span class="symbol">(</span><span class="identifier" id="mozilla.telemetry.glean.GleanInternalAPI$testIsExperimentActive(kotlin.String)/experimentId">experimentId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Tests whether an experiment is active, for testing purposes only.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

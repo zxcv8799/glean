@@ -1,0 +1,22 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>TimingDistributionMetricType.stopAndAccumulate - project</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">project</a>&nbsp;/&nbsp;<a href="../index.html">mozilla.telemetry.glean.private</a>&nbsp;/&nbsp;<a href="index.html">TimingDistributionMetricType</a>&nbsp;/&nbsp;<a href="./stop-and-accumulate.html">stopAndAccumulate</a><br/>
+<br/>
+<h1>stopAndAccumulate</h1>
+<a name="mozilla.telemetry.glean.private.TimingDistributionMetricType$stopAndAccumulate(kotlin.Any)"></a>
+<code><span class="keyword">fun </span><span class="identifier">stopAndAccumulate</span><span class="symbol">(</span><span class="identifier" id="mozilla.telemetry.glean.private.TimingDistributionMetricType$stopAndAccumulate(kotlin.Any)/timerId">timerId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Stop tracking time for the provided metric and associated object. Add a
+count to the corresponding bucket in the timing distribution.
+This will record an error if no <a href="start.html">start</a> was called.</p>
+<h3>Parameters</h3>
+<p><a name="timerId"></a>
+<code>timerId</code> - The object to associate with this timing.  This allows
+for concurrent timing of events associated with different objects to the
+same timespan metric.</p>
+</BODY>
+</HTML>

@@ -1,0 +1,164 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>TimingDistributionData - project</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">project</a>&nbsp;/&nbsp;<a href="../index.html">mozilla.telemetry.glean.private</a>&nbsp;/&nbsp;<a href="./index.html">TimingDistributionData</a><br/>
+<br/>
+<h1>TimingDistributionData</h1>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">TimingDistributionData</span></code>
+<p>This class represents the structure of a timing distribution according to the pipeline schema. It
+is meant to help serialize and deserialize data to the correct format for transport and storage,
+as well as including a helper function to calculate the bucket sizes.</p>
+<h3>Parameters</h3>
+<p><a name="category"></a>
+<code>category</code> - of the metric</p>
+<p><a name="name"></a>
+<code>name</code> - of the metric</p>
+<p><a name="bucketCount"></a>
+<code>bucketCount</code> - total number of buckets</p>
+<p><a name="range"></a>
+<code>range</code> - an array always containing 2 elements: the minimum and maximum bucket values</p>
+<p><a name="histogramType"></a>
+<code>histogramType</code> - the <a href="../-histogram-type/index.html">HistogramType</a> representing the bucket layout</p>
+<p><a name="values"></a>
+<code>values</code> - a map containing the bucket index mapped to the accumulated count</p>
+<p><a name="sum"></a>
+<code>sum</code> - the accumulated sum of all the samples in the timing distribution</p>
+<p><a name="timeUnit"></a>
+<code>timeUnit</code> - the base <a href="../-time-unit/index.html">TimeUnit</a> of the bucket values</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">TimingDistributionData</span><span class="symbol">(</span><span class="identifier" id="mozilla.telemetry.glean.private.TimingDistributionData$<init>(kotlin.String, kotlin.String, kotlin.Int, kotlin.Long, kotlin.Long, mozilla.telemetry.glean.private.HistogramType, kotlin.collections.MutableMap((kotlin.Int, kotlin.Long)), kotlin.Long, mozilla.telemetry.glean.private.TimeUnit)/category">category</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="mozilla.telemetry.glean.private.TimingDistributionData$<init>(kotlin.String, kotlin.String, kotlin.Int, kotlin.Long, kotlin.Long, mozilla.telemetry.glean.private.HistogramType, kotlin.collections.MutableMap((kotlin.Int, kotlin.Long)), kotlin.Long, mozilla.telemetry.glean.private.TimeUnit)/name">name</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="mozilla.telemetry.glean.private.TimingDistributionData$<init>(kotlin.String, kotlin.String, kotlin.Int, kotlin.Long, kotlin.Long, mozilla.telemetry.glean.private.HistogramType, kotlin.collections.MutableMap((kotlin.Int, kotlin.Long)), kotlin.Long, mozilla.telemetry.glean.private.TimeUnit)/bucketCount">bucketCount</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;DEFAULT_BUCKET_COUNT<span class="symbol">, </span><span class="identifier" id="mozilla.telemetry.glean.private.TimingDistributionData$<init>(kotlin.String, kotlin.String, kotlin.Int, kotlin.Long, kotlin.Long, mozilla.telemetry.glean.private.HistogramType, kotlin.collections.MutableMap((kotlin.Int, kotlin.Long)), kotlin.Long, mozilla.telemetry.glean.private.TimeUnit)/rangeMin">rangeMin</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a>&nbsp;<span class="symbol">=</span>&nbsp;DEFAULT_RANGE_MIN<span class="symbol">, </span><span class="identifier" id="mozilla.telemetry.glean.private.TimingDistributionData$<init>(kotlin.String, kotlin.String, kotlin.Int, kotlin.Long, kotlin.Long, mozilla.telemetry.glean.private.HistogramType, kotlin.collections.MutableMap((kotlin.Int, kotlin.Long)), kotlin.Long, mozilla.telemetry.glean.private.TimeUnit)/rangeMax">rangeMax</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a>&nbsp;<span class="symbol">=</span>&nbsp;DEFAULT_RANGE_MAX<span class="symbol">, </span><span class="identifier" id="mozilla.telemetry.glean.private.TimingDistributionData$<init>(kotlin.String, kotlin.String, kotlin.Int, kotlin.Long, kotlin.Long, mozilla.telemetry.glean.private.HistogramType, kotlin.collections.MutableMap((kotlin.Int, kotlin.Long)), kotlin.Long, mozilla.telemetry.glean.private.TimeUnit)/histogramType">histogramType</span><span class="symbol">:</span>&nbsp;<a href="../-histogram-type/index.html"><span class="identifier">HistogramType</span></a>&nbsp;<span class="symbol">=</span>&nbsp;HistogramType.Exponential<span class="symbol">, </span><span class="identifier" id="mozilla.telemetry.glean.private.TimingDistributionData$<init>(kotlin.String, kotlin.String, kotlin.Int, kotlin.Long, kotlin.Long, mozilla.telemetry.glean.private.HistogramType, kotlin.collections.MutableMap((kotlin.Int, kotlin.Long)), kotlin.Long, mozilla.telemetry.glean.private.TimeUnit)/values">values</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-map/index.html"><span class="identifier">MutableMap</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">=</span>&nbsp;mutableMapOf()<span class="symbol">, </span><span class="identifier" id="mozilla.telemetry.glean.private.TimingDistributionData$<init>(kotlin.String, kotlin.String, kotlin.Int, kotlin.Long, kotlin.Long, mozilla.telemetry.glean.private.HistogramType, kotlin.collections.MutableMap((kotlin.Int, kotlin.Long)), kotlin.Long, mozilla.telemetry.glean.private.TimeUnit)/sum">sum</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a>&nbsp;<span class="symbol">=</span>&nbsp;0<span class="symbol">, </span><span class="identifier" id="mozilla.telemetry.glean.private.TimingDistributionData$<init>(kotlin.String, kotlin.String, kotlin.Int, kotlin.Long, kotlin.Long, mozilla.telemetry.glean.private.HistogramType, kotlin.collections.MutableMap((kotlin.Int, kotlin.Long)), kotlin.Long, mozilla.telemetry.glean.private.TimeUnit)/timeUnit">timeUnit</span><span class="symbol">:</span>&nbsp;<a href="../-time-unit/index.html"><span class="identifier">TimeUnit</span></a>&nbsp;<span class="symbol">=</span>&nbsp;TimeUnit.Millisecond<span class="symbol">)</span></code>
+<p>This class represents the structure of a timing distribution according to the pipeline schema. It
+is meant to help serialize and deserialize data to the correct format for transport and storage,
+as well as including a helper function to calculate the bucket sizes.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="bucket-count.html">bucketCount</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">bucketCount</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>total number of buckets</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="category.html">category</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">category</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>of the metric</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="count.html">count</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">count</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="histogram-type.html">histogramType</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">histogramType</span><span class="symbol">: </span><a href="../-histogram-type/index.html"><span class="identifier">HistogramType</span></a></code>
+<p>the <a href="../-histogram-type/index.html">HistogramType</a> representing the bucket layout</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="name.html">name</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">name</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>of the metric</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="range-max.html">rangeMax</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">rangeMax</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="range-min.html">rangeMin</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">rangeMin</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="sum.html">sum</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">sum</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>the accumulated sum of all the samples in the timing distribution</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="time-unit.html">timeUnit</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">timeUnit</span><span class="symbol">: </span><a href="../-time-unit/index.html"><span class="identifier">TimeUnit</span></a></code>
+<p>the base <a href="../-time-unit/index.html">TimeUnit</a> of the bucket values</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="values.html">values</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">values</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-map/index.html"><span class="identifier">MutableMap</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">&gt;</span></code>
+<p>a map containing the bucket index mapped to the accumulated count</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-d-e-f-a-u-l-t_-b-u-c-k-e-t_-c-o-u-n-t.html">DEFAULT_BUCKET_COUNT</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">DEFAULT_BUCKET_COUNT</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-d-e-f-a-u-l-t_-r-a-n-g-e_-m-a-x.html">DEFAULT_RANGE_MAX</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">DEFAULT_RANGE_MAX</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-d-e-f-a-u-l-t_-r-a-n-g-e_-m-i-n.html">DEFAULT_RANGE_MIN</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">DEFAULT_RANGE_MIN</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
