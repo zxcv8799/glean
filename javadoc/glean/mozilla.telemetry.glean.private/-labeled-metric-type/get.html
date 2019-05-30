@@ -1,0 +1,28 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>LabeledMetricType.get - glean</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">glean</a>&nbsp;/&nbsp;<a href="../index.html">mozilla.telemetry.glean.private</a>&nbsp;/&nbsp;<a href="index.html">LabeledMetricType</a>&nbsp;/&nbsp;<a href="./get.html">get</a><br/>
+<br/>
+<h1>get</h1>
+<a name="mozilla.telemetry.glean.private.LabeledMetricType$get(kotlin.String)"></a>
+<code><span class="keyword">operator</span> <span class="keyword">fun </span><span class="identifier">get</span><span class="symbol">(</span><span class="identifier" id="mozilla.telemetry.glean.private.LabeledMetricType$get(kotlin.String)/label">label</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a></code>
+<p>Get the specific metric for a given label.</p>
+<p>If a set of acceptable labels were specified in the metrics.yaml file,
+and the given label is not in the set, it will be recorded under the
+special <a href="#">OTHER_LABEL</a>.</p>
+<p>If a set of acceptable labels was not specified in the metrics.yaml file,
+only the first 16 unique labels will be used. After that, any additional
+labels will be recorded under the special <a href="#">OTHER_LABEL</a> label.</p>
+<p>Labels must be snake_case and less than 30 characters. If an invalid label
+is used, the metric will be recorded in the special <a href="#">OTHER_LABEL</a> label.</p>
+<h3>Parameters</h3>
+<p><a name="label"></a>
+<code>label</code> - The label</p>
+<p><strong>Return</strong><br/>
+The specific metric for that label</p>
+</BODY>
+</HTML>

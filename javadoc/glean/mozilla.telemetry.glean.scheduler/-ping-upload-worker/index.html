@@ -1,0 +1,60 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>PingUploadWorker - glean</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">glean</a>&nbsp;/&nbsp;<a href="../index.html">mozilla.telemetry.glean.scheduler</a>&nbsp;/&nbsp;<a href="./index.html">PingUploadWorker</a><br/>
+<br/>
+<h1>PingUploadWorker</h1>
+<code><span class="keyword">class </span><span class="identifier">PingUploadWorker</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Worker</span></code>
+<p>This class is the worker class used by <a href="#">WorkManager</a> to handle uploading the ping to the server.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">PingUploadWorker</span><span class="symbol">(</span><span class="identifier" id="mozilla.telemetry.glean.scheduler.PingUploadWorker$<init>(android.content.Context, androidx.work.WorkerParameters)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">, </span><span class="identifier" id="mozilla.telemetry.glean.scheduler.PingUploadWorker$<init>(android.content.Context, androidx.work.WorkerParameters)/params">params</span><span class="symbol">:</span>&nbsp;<span class="identifier">WorkerParameters</span><span class="symbol">)</span></code>
+<p>This class is the worker class used by <a href="#">WorkManager</a> to handle uploading the ping to the server.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="do-work.html">doWork</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">doWork</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Result</span></code>
+<p>This method is called on a background thread - you are required to <strong>synchronously</strong> do your
+work and return the <a href="#">androidx.work.ListenableWorker.Result</a> from this method.  Once you
+return from this method, the Worker is considered to have finished what its doing and will be
+destroyed.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="build-constraints.html">buildConstraints</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">buildConstraints</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Constraints</span></code>
+<p>Build the constraints around which the worker can be run, such as whether network
+connectivity is required.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
